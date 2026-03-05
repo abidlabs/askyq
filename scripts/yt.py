@@ -85,25 +85,31 @@ def cmd_transcript(video_id):
     try:
         api = YouTubeTranscriptApi()
         t = api.fetch(video_id, languages=["en"])
-        lines = [snippet.text for snippet in t]
+        snippets = [{"text": s.text, "start": s.start, "duration": s.duration} for s in t]
     except (TypeError, AttributeError):
         t = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
-        lines = [snippet["text"] for snippet in t]
+        snippets = [{"text": s["text"], "start": s["start"], "duration": s["duration"]} for s in t]
 
-    text = " ".join(lines)
+    text = " ".join(s["text"] for s in snippets)
 
-    # Save to file with word-wrapped paragraphs for readability
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     tmp_dir = os.path.join(project_root, "tmp")
     os.makedirs(tmp_dir, exist_ok=True)
 
+    # Save plain text version (word-wrapped paragraphs)
     path = os.path.join(tmp_dir, f"transcript_{video_id}.txt")
     words = text.split()
     with open(path, "w") as f:
         for i in range(0, len(words), 150):
             f.write(" ".join(words[i:i + 150]) + "\n\n")
 
+    # Save timestamped JSON version
+    ts_path = os.path.join(tmp_dir, f"transcript_{video_id}_ts.json")
+    with open(ts_path, "w") as f:
+        json.dump(snippets, f, indent=2)
+
     print(path)
+    print(ts_path)
 
 
 def main():
