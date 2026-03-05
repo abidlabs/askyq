@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AskYQ - Islamic Rulings from Yasir Qadhi</title>
+    <link rel="stylesheet" href="./assets/css/main.css" />
+  </head>
+  <body>
+    <div class="pattern-bg" aria-hidden="true" id="patternBg"></div>
+
+    <main class="landing">
+      <nav class="top-nav">
+        <a href="./api/index.html" class="nav-link">API docs</a>
+        <a href="./api/index.json" class="nav-link">JSON</a>
+      </nav>
+
+      <section class="hero">
+        <div class="bismillah" aria-hidden="true">&#1576;&#1587;&#1605; &#1575;&#1604;&#1604;&#1607; &#1575;&#1604;&#1585;&#1581;&#1605;&#1606; &#1575;&#1604;&#1585;&#1581;&#1610;&#1605;</div>
+        <p class="eyebrow">Islamic rulings database</p>
+        <h1 class="site-title">Ask<em>YQ</em></h1>
+        <p class="site-tagline">
+          Search fatwas and Islamic rulings derived from Yasir Qadhi's lectures and Q&A sessions.
+        </p>
+
+        <div class="search-wrap">
+          <div class="search-box">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <circle cx="9" cy="9" r="5.5"/>
+              <path d="M14 14L17.5 17.5"/>
+            </svg>
+            <label for="fatwaSearch" class="sr-only">Search fatwas</label>
+            <input
+              id="fatwaSearch"
+              type="text"
+              placeholder="Search a topic, e.g. insurance, mortgage, music..."
+              autocomplete="off"
+              spellcheck="false"
+              aria-controls="searchResults"
+              aria-expanded="false"
+            />
+          </div>
+          <div id="searchResults" class="results" role="listbox"></div>
+        </div>
+      </section>
+
+      <section class="recent-section" id="recentSection">
+        <p class="ornament" aria-hidden="true">&#10022; &#10022; &#10022;</p>
+        <p class="recent-label">Recently added</p>
+        <div class="recent-grid" id="recentGrid"></div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-stat">
+          <span class="stat-value" id="fatwaCount">Loading...</span>
+          <span class="stat-subvalue">Transcripts cleaned and organized from video lectures</span>
+        </div>
+        <p class="footer-disclaimer">
+          Transcripts are AI-cleaned from YouTube auto-captions and may contain errors.
+          <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a>
+        </p>
+      </footer>
+    </main>
+
+    <script type="module" src="./assets/js/search.js"></script>
+  </body>
+</html>

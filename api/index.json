@@ -1,0 +1,10 @@
+{
+  "service": "AskYQ Static API",
+  "version": "v1",
+  "routes": {
+    "apiIndex": "/api/index.json",
+    "fatwaList": "/data/fatwas.json",
+    "fatwaByIdTemplate": "/api/fatwas/{id}.json"
+  },
+  "fatwaCount": 1
+}

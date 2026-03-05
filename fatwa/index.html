@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AskYQ - Fatwa</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+  </head>
+  <body>
+    <div class="pattern-bg" aria-hidden="true"></div>
+
+    <main class="page">
+      <nav class="top-nav">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../api/index.html" class="nav-link">API docs</a>
+        <a href="../api/index.json" class="nav-link">JSON</a>
+      </nav>
+
+      <a href="../index.html" class="back-link">&larr; Back to search</a>
+
+      <div id="fatwaHeader" class="fatwa-header">
+        <p class="fatwa-header-category" id="fatwaCategory">Loading...</p>
+        <h1 class="fatwa-header-title" id="fatwaTitle">Loading...</h1>
+        <div class="fatwa-header-meta" id="fatwaMeta"></div>
+        <div class="fatwa-tags" id="fatwaTags"></div>
+      </div>
+
+      <article class="fatwa-body" id="fatwaBody">
+        <p style="color: var(--text-dim)">Loading fatwa content...</p>
+      </article>
+
+      <footer class="site-footer page-footer">
+        <div class="footer-stat">
+          <span class="stat-value">AskYQ</span>
+          <span class="stat-subvalue">Islamic rulings from Yasir Qadhi</span>
+        </div>
+        <p class="footer-disclaimer">
+          Transcripts are AI-cleaned from YouTube auto-captions and may contain errors.
+          <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a>
+        </p>
+      </footer>
+    </main>
+
+    <script type="module" src="../assets/js/fatwa.js"></script>
+  </body>
+</html>

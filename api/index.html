@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AskYQ API docs</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+  </head>
+  <body>
+    <div class="pattern-bg" aria-hidden="true"></div>
+
+    <main class="page">
+      <nav class="top-nav">
+        <a href="../index.html" class="nav-link">Search UI</a>
+        <a href="./index.json" class="nav-link">API index JSON</a>
+      </nav>
+
+      <header class="hero" style="flex: 0; padding-bottom: 24px;">
+        <p class="eyebrow">AskYQ</p>
+        <h1 class="site-title" style="font-size: clamp(28px, 6vw, 48px);">Static API</h1>
+        <p class="subtext">
+          These endpoints are static JSON files served by GitHub Pages.
+        </p>
+      </header>
+
+      <section class="detail-card">
+        <h2>Base URL</h2>
+        <pre><code>https://abidlabs.github.io/askyq</code></pre>
+      </section>
+
+      <section class="detail-card">
+        <h2>Endpoints</h2>
+        <ul class="api-endpoint-list">
+          <li>
+            <strong>API index</strong><br />
+            <code>/api/index.json</code>
+          </li>
+          <li>
+            <strong>All fatwas (list with summaries)</strong><br />
+            <code>/data/fatwas.json</code>
+          </li>
+          <li>
+            <strong>Single fatwa (full transcript)</strong><br />
+            <code>/api/fatwas/{id}.json</code>
+          </li>
+        </ul>
+      </section>
+
+      <section class="detail-card">
+        <h2>Example requests</h2>
+        <pre><code>curl https://abidlabs.github.io/askyq/data/fatwas.json</code></pre>
+        <pre><code>curl https://abidlabs.github.io/askyq/api/fatwas/insurance-in-islam.json</code></pre>
+      </section>
+
+      <section class="detail-card">
+        <h2>Fatwa list response shape</h2>
+        <pre><code>[
+  {
+    "id": "insurance-in-islam",
+    "title": "Is house, car, and life insurance permitted in Islam?",
+    "summary": "Car and health insurance are permitted due to necessity...",
+    "scholar": "Yasir Qadhi",
+    "videoId": "NDCFhJ7YnKM",
+    "videoUrl": "https://www.youtube.com/watch?v=NDCFhJ7YnKM",
+    "datePublished": "2019-03-15",
+    "tags": ["insurance", "car insurance", ...],
+    "category": "Financial Transactions"
+  }
+]</code></pre>
+      </section>
+
+      <section class="detail-card">
+        <h2>Single fatwa response shape</h2>
+        <pre><code>{
+  "id": "insurance-in-islam",
+  "title": "Is house, car, and life insurance permitted in Islam?",
+  "scholar": "Yasir Qadhi",
+  "videoId": "NDCFhJ7YnKM",
+  "videoUrl": "https://www.youtube.com/watch?v=NDCFhJ7YnKM",
+  "stanceSummary": "Car and health insurance are permitted...",
+  "transcript": "## Summary of Yasir Qadhi's Position\n\n..."
+}</code></pre>
+      </section>
+
+      <footer class="site-footer page-footer">
+        <div class="footer-stat">
+          <span class="stat-value">AskYQ</span>
+          <span class="stat-subvalue">Islamic rulings from Yasir Qadhi</span>
+        </div>
+        <p class="footer-disclaimer">
+          Transcripts are AI-cleaned from YouTube auto-captions and may contain errors.
+          <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a>
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>
