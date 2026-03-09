@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 630px;
+    background: #0a0f0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Georgia, "Times New Roman", serif;
+    position: relative;
+    overflow: hidden;
+  }
+  .grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 40px, #c9a84c 40px, #c9a84c 41px),
+      repeating-linear-gradient(90deg, transparent, transparent 40px, #c9a84c 40px, #c9a84c 41px);
+  }
+  .content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .bismillah {
+    font-size: 40px;
+    color: #c9a84c;
+    opacity: 0.7;
+    font-family: "Traditional Arabic", serif;
+  }
+  .eyebrow {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .title {
+    font-size: 140px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .title em {
+    font-style: italic;
+    color: #c9a84c;
+  }
+  .tagline {
+    font-size: 28px;
+    color: #7a937a;
+    max-width: 750px;
+    line-height: 1.4;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .badge {
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 20px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 600;
+    background: rgba(74, 158, 106, 0.15);
+    color: #4a9e6a;
+    border: 1px solid rgba(74, 158, 106, 0.3);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="content">
+    <div class="bismillah">&#1576;&#1587;&#1605; &#1575;&#1604;&#1604;&#1607; &#1575;&#1604;&#1585;&#1581;&#1605;&#1606; &#1575;&#1604;&#1585;&#1581;&#1610;&#1605;</div>
+    <p class="eyebrow">Islamic rulings database</p>
+    <h1 class="title">Ask<em>YQ</em></h1>
+    <p class="tagline">Fatwas and Islamic rulings from Yasir Qadhi's lectures and Q&A sessions</p>
+    <span class="badge" id="count">FATWA_COUNT rulings indexed</span>
+  </div>
+</body>
+</html>

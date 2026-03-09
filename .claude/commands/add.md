@@ -84,9 +84,10 @@ For each identified topic, create two things:
   "videoId": "<videoId>",
   "videoUrl": "https://www.youtube.com/watch?v=<videoId>",
   "datePublished": "<YYYY-MM-DD from search results>",
-  "tags": ["<relevant>", "<search>", "<terms>"],
+  "tags": ["<relevant>", "<search>", "<terms>", "<include long-tail keyword phrases people would Google>"],
   "category": "<see categories below>",
   "stanceSummary": "<2-4 sentence summary of the ruling with key nuances and conditions>",
+  "alternateQuestions": ["<3-5 alternative ways people might phrase this question in a search engine>"],
   "transcript": "<full cleaned transcript in Markdown — see cleaning guidelines>"
 }
 ```
@@ -117,6 +118,10 @@ For each identified topic, create two things:
 - Death & Afterlife
 - Dress & Appearance
 - Other
+
+### SEO: Tags and Alternate Questions
+- **Tags** should include both specific Islamic terms AND long-tail keyword phrases people would Google, e.g. `"is mortgage halal"`, `"buying house with interest"`, `"islamic mortgage"`
+- **alternateQuestions** should be 3-5 common ways people phrase this question in search engines. Think about what a non-scholar would type into Google or ask an AI chatbot. Examples: "Is yoga haram in Islam?", "Can Muslims do yoga for exercise?", "Is yoga shirk?"
 
 ### ID / Slug Guidelines
 - Lowercase kebab-case
@@ -165,7 +170,17 @@ In a [2025 video](https://www.youtube.com/watch?v=VIDEO_ID) (starting at [5:23](
 
 Read `api/index.json`, update `fatwaCount` to match the total number of entries now in `data/fatwas.json`, and write it back.
 
-## Step 7: Summary
+## Step 7: Rebuild Static Site
+
+Run the build script to regenerate all static HTML pages, sitemap, and RSS feed:
+
+```bash
+node scripts/build.js
+```
+
+This updates the homepage, generates static pages for all new fatwas, updates category pages, sitemap.xml, and feed.xml.
+
+## Step 8: Summary
 
 Tell the user:
 - How many new fatwas were created

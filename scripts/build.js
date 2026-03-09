@@ -203,6 +203,17 @@ function buildFatwaPage(fatwa, allFatwas) {
       </section>`
     : "";
 
+  // Alternate questions ("People also ask")
+  const altQuestions = fatwa.alternateQuestions || [];
+  const altQuestionsHtml = altQuestions.length
+    ? `<section class="also-ask">
+        <h2 class="also-ask-heading">People Also Ask</h2>
+        <ul class="also-ask-list">
+          ${altQuestions.map((q) => `<li>${escapeHtml(q)}</li>`).join("\n          ")}
+        </ul>
+      </section>`
+    : "";
+
   const articleJsonLd = JSON.stringify(
     {
       "@context": "https://schema.org",
@@ -224,20 +235,25 @@ function buildFatwaPage(fatwa, allFatwas) {
     2
   );
 
+  // Include alternate questions in FAQPage schema — all point to the same answer
+  const faqEntries = [
+    {
+      "@type": "Question",
+      name: fatwa.title,
+      acceptedAnswer: { "@type": "Answer", text: desc },
+    },
+    ...altQuestions.map((q) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: desc },
+    })),
+  ];
+
   const faqJsonLd = JSON.stringify(
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: fatwa.title,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: desc,
-          },
-        },
-      ],
+      mainEntity: faqEntries,
     },
     null,
     2
@@ -284,7 +300,11 @@ function buildFatwaPage(fatwa, allFatwas) {
     <meta property="og:type" content="article" />
     <meta property="og:url" content="${canonicalUrl}" />
     <meta property="og:site_name" content="AskYQ" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="${SITE_URL}/assets/images/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="${SITE_URL}/assets/images/og-image.png" />
     <meta name="twitter:title" content="${escapeHtml(fatwa.title)}" />
     <meta name="twitter:description" content="${escapeHtml(desc)}" />
     <link rel="alternate" type="application/rss+xml" title="AskYQ RSS Feed" href="${SITE_URL}/feed.xml" />
@@ -328,6 +348,8 @@ function buildFatwaPage(fatwa, allFatwas) {
         <p class="quick-answer-heading">Quick Answer</p>
         <p>${escapeHtml(desc)}</p>
       </div>
+
+      ${altQuestionsHtml}
 
       <article class="fatwa-body">
         ${bodyHtml}
@@ -405,7 +427,11 @@ function buildCategoryPage(category, catFatwas, allCategories) {
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${canonicalUrl}" />
     <meta property="og:site_name" content="AskYQ" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="${SITE_URL}/assets/images/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="${SITE_URL}/assets/images/og-image.png" />
     <link rel="alternate" type="application/rss+xml" title="AskYQ RSS Feed" href="${SITE_URL}/feed.xml" />
     <script type="application/ld+json">${breadcrumbJsonLd}</script>
     <link rel="stylesheet" href="../../assets/css/main.css" />
@@ -532,7 +558,11 @@ function buildHomepage(fatwas, categories) {
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${canonicalUrl}" />
     <meta property="og:site_name" content="AskYQ" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="${SITE_URL}/assets/images/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="${SITE_URL}/assets/images/og-image.png" />
     <link rel="alternate" type="application/rss+xml" title="AskYQ RSS Feed" href="${SITE_URL}/feed.xml" />
     <script type="application/ld+json">${websiteJsonLd}</script>
     <script type="application/ld+json">${faqJsonLd}</script>
@@ -747,7 +777,49 @@ function main() {
   fs.writeFileSync(path.join(ROOT, "feed.xml"), buildFeed(fatwas));
   console.log("  feed.xml");
 
+  // 7. OG image (update fatwa count)
+  generateOgImage(fatwas.length);
+
   console.log("\nDone.");
+}
+
+function generateOgImage(count) {
+  const { execSync } = require("child_process");
+  const templatePath = path.join(ROOT, "scripts", "og-image.html");
+  const imgDir = path.join(ROOT, "assets", "images");
+  const imgPath = path.join(imgDir, "og-image.png");
+
+  // Read template and inject count
+  let html = fs.readFileSync(templatePath, "utf-8");
+  html = html.replace("FATWA_COUNT", String(count));
+
+  // Write temp file with updated count
+  const tmpPath = path.join(ROOT, "tmp", "og-image-tmp.html");
+  fs.mkdirSync(path.dirname(tmpPath), { recursive: true });
+  fs.writeFileSync(tmpPath, html);
+  fs.mkdirSync(imgDir, { recursive: true });
+
+  // Try to generate with Chrome
+  const chromePaths = [
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "google-chrome",
+    "chromium",
+  ];
+  for (const chrome of chromePaths) {
+    try {
+      execSync(
+        `"${chrome}" --headless --disable-gpu --screenshot="${imgPath}" --window-size=1200,630 --hide-scrollbars "${tmpPath}"`,
+        { stdio: "ignore" }
+      );
+      fs.unlinkSync(tmpPath);
+      console.log("  og-image.png");
+      return;
+    } catch (_) {
+      // try next
+    }
+  }
+  fs.unlinkSync(tmpPath);
+  console.log("  og-image.png (skipped — Chrome not found)");
 }
 
 main();
