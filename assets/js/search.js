@@ -87,7 +87,7 @@ function runSearch(query) {
 }
 
 function goToFatwa(id) {
-  window.location.href = `./fatwa/index.html?id=${encodeURIComponent(id)}`;
+  window.location.href = `./fatwa/${encodeURIComponent(id)}/`;
 }
 
 function renderRecentCards(list) {
@@ -96,7 +96,7 @@ function renderRecentCards(list) {
   list.forEach((fatwa) => {
     const card = document.createElement("a");
     card.className = "fatwa-card";
-    card.href = `./fatwa/index.html?id=${encodeURIComponent(fatwa.id)}`;
+    card.href = `./fatwa/${encodeURIComponent(fatwa.id)}/`;
 
     const cat = document.createElement("span");
     cat.className = "fatwa-card-category";
