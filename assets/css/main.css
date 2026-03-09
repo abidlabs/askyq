@@ -307,6 +307,28 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+/* Marquee container */
+.marquee-wrap {
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  animation: marquee-scroll 60s linear infinite;
+}
+
+.marquee-wrap:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 .recent-grid {
   display: flex;
   flex-wrap: wrap;
@@ -329,6 +351,12 @@ body {
   width: 100%;
   text-decoration: none;
   color: inherit;
+}
+
+.marquee-track .fatwa-card {
+  min-width: 300px;
+  max-width: 300px;
+  flex-shrink: 0;
 }
 
 .fatwa-card:hover {
@@ -389,11 +417,15 @@ body {
    FOOTER
    ============================================================ */
 .site-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 28px 28px;
+  padding: 14px 28px;
   border-top: 1px solid var(--border-soft);
+  background: var(--bg);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -401,8 +433,6 @@ body {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   gap: 16px;
-  padding: 16px 28px 28px;
-  margin-top: auto;
 }
 
 .footer-stat {
@@ -424,11 +454,15 @@ body {
 
 .footer-disclaimer {
   margin: 0;
-  max-width: 520px;
+  max-width: 580px;
   font-size: 13px;
   line-height: 1.5;
   color: var(--text-dim);
   text-align: right;
+}
+
+.footer-disclaimer p {
+  margin: 0;
 }
 
 .footer-disclaimer a {
@@ -445,12 +479,16 @@ body {
    DETAIL / FATWA PAGE
    ============================================================ */
 .page {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 28px 20px 0;
+  padding: 0 20px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.page.page-wide {
+  max-width: 1300px;
 }
 
 .back-link {
@@ -763,6 +801,7 @@ pre {
   margin-bottom: 14px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
+  text-align: right;
 }
 
 .breadcrumb a {
@@ -882,6 +921,11 @@ pre {
 
 .category-grid {
   margin-bottom: 32px;
+  max-width: none;
+}
+
+.category-grid .fatwa-card {
+  max-width: 420px;
 }
 
 .other-categories {
@@ -939,6 +983,25 @@ pre {
   letter-spacing: 0.1em;
   margin: 0 0 14px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.related-section .recent-grid {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 0;
+  justify-content: flex-start;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.related-section .recent-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.related-section .fatwa-card {
+  min-width: 280px;
+  max-width: 280px;
+  flex-shrink: 0;
 }
 
 /* ============================================================

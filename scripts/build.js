@@ -187,7 +187,14 @@ function buildFatwaPage(fatwa, allFatwas) {
   const tagsHtml = (fatwa.tags || [])
     .map((t) => `<span class="fatwa-tag">${escapeHtml(t)}</span>`)
     .join("");
-  const bodyHtml = markdownToHtml(fatwa.transcript || "");
+  // Strip the "Summary of Yasir Qadhi's Position" section — Quick Answer covers it
+  let transcript = fatwa.transcript || "";
+  const fullTranscriptMarker = "## Full Lecture Transcript";
+  const ftIdx = transcript.indexOf(fullTranscriptMarker);
+  if (ftIdx > 0) {
+    transcript = transcript.substring(ftIdx);
+  }
+  const bodyHtml = markdownToHtml(transcript);
   const related = getRelatedFatwas(fatwa, allFatwas);
   const relatedHtml = related.length
     ? `<section class="related-section">
@@ -292,8 +299,8 @@ function buildFatwaPage(fatwa, allFatwas) {
     <main class="page">
       <nav class="top-nav">
         <a href="../../" class="nav-link">Home</a>
-        <a href="../../category/${catSlug}/" class="nav-link">${escapeHtml(fatwa.category)}</a>
         <a href="../../api/index.html" class="nav-link">API docs</a>
+        <a href="../../feed.xml" class="nav-link">RSS</a>
       </nav>
 
       <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -333,10 +340,10 @@ function buildFatwaPage(fatwa, allFatwas) {
           <span class="stat-value">AskYQ</span>
           <span class="stat-subvalue">Islamic rulings from Yasir Qadhi</span>
         </div>
-        <p class="footer-disclaimer">
-          Transcripts are AI-cleaned from YouTube auto-captions and may contain errors.
-          <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a>
-        </p>
+        <div class="footer-disclaimer">
+          <p>Transcripts are AI-cleaned and AI-summarized, and may contain errors. <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a></p>
+          <p>It is always best to consult with a trusted, local scholar for your questions.</p>
+        </div>
       </footer>
     </main>
   </body>
@@ -406,10 +413,11 @@ function buildCategoryPage(category, catFatwas, allCategories) {
   <body>
     <div class="pattern-bg" aria-hidden="true"></div>
 
-    <main class="page">
+    <main class="page page-wide">
       <nav class="top-nav">
         <a href="../../" class="nav-link">Home</a>
         <a href="../../api/index.html" class="nav-link">API docs</a>
+        <a href="../../feed.xml" class="nav-link">RSS</a>
       </nav>
 
       <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -440,10 +448,10 @@ function buildCategoryPage(category, catFatwas, allCategories) {
           <span class="stat-value">AskYQ</span>
           <span class="stat-subvalue">Islamic rulings from Yasir Qadhi</span>
         </div>
-        <p class="footer-disclaimer">
-          Transcripts are AI-cleaned from YouTube auto-captions and may contain errors.
-          <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a>
-        </p>
+        <div class="footer-disclaimer">
+          <p>Transcripts are AI-cleaned and AI-summarized, and may contain errors. <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a></p>
+          <p>It is always best to consult with a trusted, local scholar for your questions.</p>
+        </div>
       </footer>
     </main>
   </body>
@@ -464,25 +472,12 @@ function buildHomepage(fatwas, categories) {
     .map((f) => fatwaCardHtml(f, "./"))
     .join("\n");
 
-  // Full index grouped by category
-  const browseHtml = categories
-    .map((cat) => {
-      const catFatwas = fatwas.filter((f) => f.category === cat);
-      const catSlug = slugify(cat);
-      const cards = catFatwas.map((f) => fatwaCardHtml(f, "./")).join("\n");
-      return `<div class="category-section" id="cat-${catSlug}">
-        <h3 class="category-heading"><a href="./category/${catSlug}/">${escapeHtml(cat)}</a> <span class="category-count-badge">${catFatwas.length}</span></h3>
-        <div class="recent-grid">${cards}</div>
-      </div>`;
-    })
-    .join("\n");
-
-  // Category nav chips
+  // Category nav chips (link to category pages)
   const catChips = categories
     .map((cat) => {
       const catSlug = slugify(cat);
       const count = fatwas.filter((f) => f.category === cat).length;
-      return `<a href="#cat-${catSlug}" class="category-chip">${escapeHtml(cat)} <span class="chip-count">${count}</span></a>`;
+      return `<a href="./category/${catSlug}/" class="category-chip">${escapeHtml(cat)} <span class="chip-count">${count}</span></a>`;
     })
     .join("\n");
 
@@ -548,8 +543,8 @@ function buildHomepage(fatwas, categories) {
 
     <main class="landing">
       <nav class="top-nav">
+        <a href="./" class="nav-link">Home</a>
         <a href="./api/index.html" class="nav-link">API docs</a>
-        <a href="./api/index.json" class="nav-link">JSON</a>
         <a href="./feed.xml" class="nav-link">RSS</a>
       </nav>
 
@@ -585,8 +580,11 @@ function buildHomepage(fatwas, categories) {
       <section class="recent-section" id="recentSection">
         <p class="ornament" aria-hidden="true">&#10022; &#10022; &#10022;</p>
         <p class="recent-label">Recently added</p>
-        <div class="recent-grid" id="recentGrid">
-          ${recentCardsHtml}
+        <div class="marquee-wrap">
+          <div class="marquee-track" id="recentGrid">
+            ${recentCardsHtml}
+            ${recentCardsHtml}
+          </div>
         </div>
       </section>
 
@@ -596,7 +594,6 @@ function buildHomepage(fatwas, categories) {
         <div class="category-chips">
           ${catChips}
         </div>
-        ${browseHtml}
       </section>
 
       <footer class="site-footer">
@@ -604,10 +601,10 @@ function buildHomepage(fatwas, categories) {
           <span class="stat-value" id="fatwaCount">${fatwas.length} fatwas in database</span>
           <span class="stat-subvalue">Transcripts cleaned and organized from video lectures</span>
         </div>
-        <p class="footer-disclaimer">
-          Transcripts are AI-cleaned from YouTube auto-captions and may contain errors.
-          <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a>
-        </p>
+        <div class="footer-disclaimer">
+          <p>Transcripts are AI-cleaned and AI-summarized, and may contain errors. <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a></p>
+          <p>It is always best to consult with a trusted, local scholar for your questions.</p>
+        </div>
       </footer>
     </main>
 
