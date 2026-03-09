@@ -185,6 +185,7 @@ function buildFatwaPage(fatwa, allFatwas) {
   const desc = fatwa.stanceSummary || fatwa.summary;
   const dateStr = formatDate(fatwa.datePublished);
   const tagsHtml = (fatwa.tags || [])
+    .slice(0, 5)
     .map((t) => `<span class="fatwa-tag">${escapeHtml(t)}</span>`)
     .join("");
   // Strip the "Summary of Yasir Qadhi's Position" section — Quick Answer covers it

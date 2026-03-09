@@ -11,6 +11,146 @@ function normalize(str) {
   return str.toLowerCase().replace(/[^a-z0-9\s]/g, "").trim();
 }
 
+function tokenize(str) {
+  if (!str) return [];
+  return normalize(str)
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+function foldToken(token) {
+  return token.replace(/(.)\1+/g, "$1");
+}
+
+function tokenSkeleton(token) {
+  const folded = foldToken(token);
+  return folded.replace(/[aeiou]/g, "");
+}
+
+function boundedDistance(a, b, maxDistance) {
+  const aLen = a.length;
+  const bLen = b.length;
+  if (!aLen) return bLen;
+  if (!bLen) return aLen;
+  if (Math.abs(aLen - bLen) > maxDistance) return maxDistance + 1;
+
+  let prev = new Array(bLen + 1);
+  let curr = new Array(bLen + 1);
+  for (let j = 0; j <= bLen; j++) prev[j] = j;
+
+  for (let i = 1; i <= aLen; i++) {
+    curr[0] = i;
+    let minInRow = curr[0];
+    const aChar = a.charCodeAt(i - 1);
+
+    for (let j = 1; j <= bLen; j++) {
+      const cost = aChar === b.charCodeAt(j - 1) ? 0 : 1;
+      const deletion = prev[j] + 1;
+      const insertion = curr[j - 1] + 1;
+      const substitution = prev[j - 1] + cost;
+      const value = Math.min(deletion, insertion, substitution);
+      curr[j] = value;
+      if (value < minInRow) minInRow = value;
+    }
+
+    if (minInRow > maxDistance) return maxDistance + 1;
+    const tmp = prev;
+    prev = curr;
+    curr = tmp;
+  }
+
+  return prev[bLen];
+}
+
+function buildSearchIndex(fatwa) {
+  const titleTokens = [...new Set(tokenize(fatwa.title))];
+  const tagTokens = [...new Set(tokenize((fatwa.tags || []).join(" ")))];
+  const titleFolded = titleTokens.map(foldToken);
+  const tagFolded = tagTokens.map(foldToken);
+  const titleSkeleton = titleTokens.map(tokenSkeleton);
+  const tagSkeleton = tagTokens.map(tokenSkeleton);
+
+  return {
+    titleTokens,
+    tagTokens,
+    titleSet: new Set(titleTokens),
+    tagSet: new Set(tagTokens),
+    titleFolded,
+    tagFolded,
+    titleSkeleton,
+    tagSkeleton,
+    titleFoldedSet: new Set(titleFolded),
+    tagFoldedSet: new Set(tagFolded),
+    titleSkeletonSet: new Set(titleSkeleton),
+    tagSkeletonSet: new Set(tagSkeleton),
+  };
+}
+
+function fuzzyFieldScore(queryToken, foldedQueryToken, tokens, foldedTokens) {
+  const maxDistance = queryToken.length >= 8 ? 2 : 1;
+  let best = 0;
+
+  for (let i = 0; i < tokens.length; i++) {
+    const candidate = tokens[i];
+    const foldedCandidate = foldedTokens[i];
+    if (Math.abs(candidate.length - queryToken.length) > maxDistance) continue;
+
+    const direct = boundedDistance(queryToken, candidate, maxDistance);
+    if (direct <= maxDistance) {
+      const score = maxDistance === 1 ? 5 : 4;
+      if (score > best) best = score;
+      continue;
+    }
+
+    const folded = boundedDistance(foldedQueryToken, foldedCandidate, maxDistance);
+    if (folded <= maxDistance) {
+      const score = maxDistance === 1 ? 5 : 4;
+      if (score > best) best = score;
+    }
+  }
+
+  return best;
+}
+
+function scoreWord(queryToken, index) {
+  const folded = foldToken(queryToken);
+  const skeleton = tokenSkeleton(queryToken);
+
+  if (index.titleSet.has(queryToken) || index.titleFoldedSet.has(folded)) return 20;
+  if (index.tagSet.has(queryToken) || index.tagFoldedSet.has(folded)) return 16;
+  if (skeleton.length >= 3 && index.titleSkeletonSet.has(skeleton)) return 13;
+  if (skeleton.length >= 3 && index.tagSkeletonSet.has(skeleton)) return 10;
+
+  let prefixHit = false;
+  for (const token of index.titleTokens) {
+    if (token.startsWith(queryToken) || queryToken.startsWith(token)) {
+      prefixHit = true;
+      break;
+    }
+  }
+  if (prefixHit) return 14;
+
+  for (const token of index.tagTokens) {
+    if (token.startsWith(queryToken) || queryToken.startsWith(token)) return 11;
+  }
+
+  const titleFuzzy = fuzzyFieldScore(
+    queryToken,
+    folded,
+    index.titleTokens,
+    index.titleFolded
+  );
+  if (titleFuzzy) return titleFuzzy;
+
+  const tagFuzzy = fuzzyFieldScore(
+    queryToken,
+    folded,
+    index.tagTokens,
+    index.tagFolded
+  );
+  return tagFuzzy ? Math.max(1, tagFuzzy - 1) : 0;
+}
+
 function resultRowTemplate(fatwa, isActive) {
   const button = document.createElement("button");
   button.type = "button";
@@ -71,17 +211,33 @@ function renderResults() {
 }
 
 function runSearch(query) {
-  const q = normalize(query);
-  if (!q) {
+  const queryTokens = [...new Set(tokenize(query))].slice(0, 6);
+  if (!queryTokens.length) {
     closeResults();
     return;
   }
-  visibleResults = fatwas.filter((f) => {
-    const haystack = normalize(
-      `${f.title} ${f.summary} ${f.tags.join(" ")} ${f.category} ${f.scholar}`
-    );
-    return q.split(/\s+/).every((word) => haystack.includes(word));
-  }).slice(0, 12);
+
+  const scored = [];
+  for (const fatwa of fatwas) {
+    const index = fatwa._searchIndex;
+    let matchedWords = 0;
+    let wordScore = 0;
+
+    for (const token of queryTokens) {
+      const score = scoreWord(token, index);
+      if (score > 0) {
+        matchedWords += 1;
+        wordScore += score;
+      }
+    }
+
+    if (!matchedWords) continue;
+    const finalScore = matchedWords * 1000 + wordScore;
+    scored.push({ fatwa, finalScore });
+  }
+
+  scored.sort((a, b) => b.finalScore - a.finalScore);
+  visibleResults = scored.slice(0, 12).map((entry) => entry.fatwa);
   activeIndex = -1;
   renderResults();
 }
@@ -182,7 +338,10 @@ document.addEventListener("click", (e) => {
 async function init() {
   try {
     const res = await fetch("./data/fatwas.json");
-    fatwas = await res.json();
+    fatwas = (await res.json()).map((fatwa) => ({
+      ...fatwa,
+      _searchIndex: buildSearchIndex(fatwa),
+    }));
     if (fatwaCountEl) {
       fatwaCountEl.textContent = `${fatwas.length} fatwa${fatwas.length !== 1 ? "s" : ""} in database`;
     }
