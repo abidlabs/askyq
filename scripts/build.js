@@ -203,16 +203,7 @@ function buildFatwaPage(fatwa, allFatwas) {
       </section>`
     : "";
 
-  // Alternate questions ("People also ask")
   const altQuestions = fatwa.alternateQuestions || [];
-  const altQuestionsHtml = altQuestions.length
-    ? `<section class="also-ask">
-        <h2 class="also-ask-heading">People Also Ask</h2>
-        <ul class="also-ask-list">
-          ${altQuestions.map((q) => `<li>${escapeHtml(q)}</li>`).join("\n          ")}
-        </ul>
-      </section>`
-    : "";
 
   const articleJsonLd = JSON.stringify(
     {
@@ -348,8 +339,6 @@ function buildFatwaPage(fatwa, allFatwas) {
         <p class="quick-answer-heading">Quick Answer</p>
         <p>${escapeHtml(desc)}</p>
       </div>
-
-      ${altQuestionsHtml}
 
       <article class="fatwa-body">
         ${bodyHtml}
