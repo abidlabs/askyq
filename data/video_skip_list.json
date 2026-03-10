@@ -6,10 +6,46 @@
     "createdAt": "2026-03-09T23:44:47.756088+00:00"
   },
   {
+    "videoId": "6eVjGNygUVY",
+    "reason": "transcripts_disabled",
+    "note": "Subtitles are disabled for this video",
+    "createdAt": "2026-03-10T00:13:42.311177+00:00"
+  },
+  {
+    "videoId": "9Mc6qqR9ApM",
+    "reason": "transcripts_disabled",
+    "note": "Subtitles are disabled for this video",
+    "createdAt": "2026-03-10T00:13:42.311177+00:00"
+  },
+  {
+    "videoId": "Ig2gyuF_l5U",
+    "reason": "transcripts_disabled",
+    "note": "Subtitles are disabled for this video",
+    "createdAt": "2026-03-10T00:13:42.311177+00:00"
+  },
+  {
+    "videoId": "J1XafRMEtb8",
+    "reason": "not_selected",
+    "note": "Auto-skipped because user did not select this candidate",
+    "createdAt": "2026-03-10T00:13:42.311177+00:00"
+  },
+  {
+    "videoId": "ZVci0lcj7Uc",
+    "reason": "transcripts_disabled",
+    "note": "Subtitles are disabled for this video",
+    "createdAt": "2026-03-10T00:13:42.311177+00:00"
+  },
+  {
     "videoId": "_KM4X7Cm9ho",
     "reason": "not_selected",
     "note": "Auto-skipped because user did not select this candidate",
     "createdAt": "2026-03-09T23:44:47.756088+00:00"
+  },
+  {
+    "videoId": "bH-nshK5ajc",
+    "reason": "transcripts_disabled",
+    "note": "Subtitles are disabled for this video",
+    "createdAt": "2026-03-10T00:13:42.311177+00:00"
   },
   {
     "videoId": "buPzuW9PuME",
@@ -30,9 +66,39 @@
     "createdAt": "2026-03-09T23:00:00+00:00"
   },
   {
+    "videoId": "lbVgIXvpWWM",
+    "reason": "not_selected",
+    "note": "Auto-skipped because user did not select this candidate",
+    "createdAt": "2026-03-10T00:13:42.311177+00:00"
+  },
+  {
+    "videoId": "n1_yGCnDtss",
+    "reason": "transcripts_disabled",
+    "note": "Subtitles are disabled for this video",
+    "createdAt": "2026-03-10T00:13:42.311177+00:00"
+  },
+  {
     "videoId": "r46qGl_A6TI",
     "reason": "transcripts_disabled",
     "note": "Subtitles are disabled for this video",
     "createdAt": "2026-03-09T23:43:54.372276+00:00"
+  },
+  {
+    "videoId": "utLodVTY8YA",
+    "reason": "transcripts_disabled",
+    "note": "Subtitles are disabled for this video",
+    "createdAt": "2026-03-10T00:13:42.311177+00:00"
+  },
+  {
+    "videoId": "wLesEg8zesY",
+    "reason": "transcripts_disabled",
+    "note": "Subtitles are disabled for this video",
+    "createdAt": "2026-03-10T00:13:42.311177+00:00"
+  },
+  {
+    "videoId": "y4RYji8Xk-U",
+    "reason": "transcripts_disabled",
+    "note": "Subtitles are disabled for this video",
+    "createdAt": "2026-03-10T00:13:42.311177+00:00"
   }
 ]

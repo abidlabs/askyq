@@ -34,7 +34,11 @@ Read `data/video_skip_list.json` and collect all `videoId` values into a user-sk
 
 ## Step 3: Search for New Videos
 
-Run multiple searches to cast a wide net for fatwa/Q&A content. Run these in parallel:
+Prioritize videos from the Ask Shaykh YQ playlist first.
+
+1. Fetch recent videos from playlist `PLYZxc42QNctU5eNYDR02fdqWl900PQCH3` using the YouTube API `playlistItems` endpoint (at least 20 items if available).
+2. Add these playlist videos to the candidate pool first.
+3. Then run multiple channel searches to cast a wide net for additional fatwa/Q&A content. Run these in parallel:
 
 ```bash
 python3 scripts/yt.py search "Q&A" 15
@@ -43,7 +47,7 @@ python3 scripts/yt.py search "fatwa ruling halal haram" 10
 python3 scripts/yt.py search "permissible in islam" 10
 ```
 
-Collect all results, deduplicate by `videoId`, and remove any whose `videoId` is already in the indexed set, in the missing-English skip set, or in the user-skip set.
+Collect all results, deduplicate by `videoId`, and remove any whose `videoId` is already in the indexed set, in the missing-English skip set, or in the user-skip set. Preserve source priority so playlist videos appear first in the presented candidates.
 
 Filter out videos that are clearly NOT fatwa/Q&A content based on their title (e.g., full-length lectures on seerah, tafsir series, khutbahs about general topics, Ramadan series, etc.). Keep only videos that look like they answer specific Islamic ruling questions.
 Also filter out YouTube Shorts by default. Exclude candidates if the title or description contains markers such as `#shorts`, `shorts`, `youtube shorts`, or obvious short-form clipping patterns.
