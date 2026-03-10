@@ -6,6 +6,9 @@ import json
 import os
 import subprocess
 import urllib.parse
+import glob
+import html
+from datetime import datetime, timezone
 
 CHANNEL_ID = "UClUa7-iHJNKEM2e_zWYSPQg"  # Yasir Qadhi
 
@@ -39,6 +42,122 @@ def _yt_get(endpoint, params):
         print(f"Error: curl failed: {result.stderr}", file=sys.stderr)
         sys.exit(1)
     return json.loads(result.stdout)
+
+
+def _project_root():
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _record_missing_english_transcript(video_id, error_message):
+    root = _project_root()
+    data_dir = os.path.join(root, "data")
+    os.makedirs(data_dir, exist_ok=True)
+    path = os.path.join(data_dir, "transcript_unavailable.json")
+    entries = []
+    if os.path.exists(path):
+        with open(path) as f:
+            try:
+                entries = json.load(f)
+            except json.JSONDecodeError:
+                entries = []
+    now = datetime.now(timezone.utc).isoformat()
+    updated = False
+    for entry in entries:
+        if entry.get("videoId") == video_id and entry.get("reason") == "missing_english_transcript":
+            entry["lastCheckedAt"] = now
+            entry["lastError"] = error_message
+            updated = True
+            break
+    if not updated:
+        entries.append({
+            "videoId": video_id,
+            "reason": "missing_english_transcript",
+            "firstCheckedAt": now,
+            "lastCheckedAt": now,
+            "lastError": error_message,
+        })
+    with open(path, "w") as f:
+        json.dump(entries, f, indent=2)
+        f.write("\n")
+
+
+def _save_transcript_outputs(video_id, snippets):
+    text = " ".join(s["text"] for s in snippets)
+    project_root = _project_root()
+    tmp_dir = os.path.join(project_root, "tmp")
+    os.makedirs(tmp_dir, exist_ok=True)
+    path = os.path.join(tmp_dir, f"transcript_{video_id}.txt")
+    words = text.split()
+    with open(path, "w") as f:
+        for i in range(0, len(words), 150):
+            f.write(" ".join(words[i:i + 150]) + "\n\n")
+    ts_path = os.path.join(tmp_dir, f"transcript_{video_id}_ts.json")
+    with open(ts_path, "w") as f:
+        json.dump(snippets, f, indent=2)
+    print(path)
+    print(ts_path)
+
+
+def _normalize_text(text):
+    return " ".join(html.unescape(text).replace("\n", " ").split()).strip()
+
+
+def _fetch_transcript_via_api(video_id):
+    try:
+        from youtube_transcript_api import YouTubeTranscriptApi
+    except ImportError as exc:
+        raise RuntimeError("youtube-transcript-api is not installed") from exc
+    try:
+        try:
+            api = YouTubeTranscriptApi()
+            t = api.fetch(video_id, languages=["en"])
+            return [{"text": _normalize_text(s.text), "start": s.start, "duration": s.duration} for s in t]
+        except (TypeError, AttributeError):
+            t = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
+            return [{"text": _normalize_text(s["text"]), "start": s["start"], "duration": s["duration"]} for s in t]
+    except Exception as exc:
+        raise exc
+
+
+def _fetch_transcript_via_ytdlp(video_id):
+    output_base = os.path.join(_project_root(), "tmp", f"ytdlp_{video_id}")
+    os.makedirs(output_base, exist_ok=True)
+    output_template = os.path.join(output_base, f"{video_id}.%(ext)s")
+    url = f"https://www.youtube.com/watch?v={video_id}"
+    cmd = [
+        "yt-dlp",
+        "--skip-download",
+        "--write-subs",
+        "--write-auto-subs",
+        "--sub-langs",
+        "en.*",
+        "--sub-format",
+        "json3",
+        "-o",
+        output_template,
+        url,
+    ]
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        msg = (result.stderr or result.stdout or "yt-dlp failed").strip()
+        raise RuntimeError(msg)
+    subtitle_files = sorted(glob.glob(os.path.join(output_base, f"{video_id}*.json3")))
+    if not subtitle_files:
+        raise RuntimeError("yt-dlp completed but no English subtitle file was produced")
+    with open(subtitle_files[0]) as f:
+        data = json.load(f)
+    snippets = []
+    for event in data.get("events", []):
+        segs = event.get("segs") or []
+        text = _normalize_text("".join(seg.get("utf8", "") for seg in segs))
+        if not text:
+            continue
+        start = (event.get("tStartMs") or 0) / 1000.0
+        duration = (event.get("dDurationMs") or 0) / 1000.0
+        snippets.append({"text": text, "start": start, "duration": duration})
+    if not snippets:
+        raise RuntimeError("yt-dlp subtitle file did not contain usable transcript events")
+    return snippets
 
 
 def cmd_search(query="", max_results=10, page_token=None):
@@ -76,40 +195,52 @@ def cmd_search(query="", max_results=10, page_token=None):
 
 def cmd_transcript(video_id):
     """Fetch captions for a YouTube video and save to tmp/."""
+    api_error = None
     try:
-        from youtube_transcript_api import YouTubeTranscriptApi
-    except ImportError:
-        print("Error: pip install youtube-transcript-api", file=sys.stderr)
-        sys.exit(1)
+        snippets = _fetch_transcript_via_api(video_id)
+    except Exception as exc:
+        api_error = exc
+        snippets = None
 
-    try:
-        api = YouTubeTranscriptApi()
-        t = api.fetch(video_id, languages=["en"])
-        snippets = [{"text": s.text, "start": s.start, "duration": s.duration} for s in t]
-    except (TypeError, AttributeError):
-        t = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
-        snippets = [{"text": s["text"], "start": s["start"], "duration": s["duration"]} for s in t]
+    if snippets is None:
+        try:
+            snippets = _fetch_transcript_via_ytdlp(video_id)
+        except FileNotFoundError:
+            snippets = None
+            ytdlp_error = "yt-dlp is not installed"
+        except Exception as exc:
+            snippets = None
+            ytdlp_error = str(exc)
+        else:
+            ytdlp_error = None
+    else:
+        ytdlp_error = None
 
-    text = " ".join(s["text"] for s in snippets)
+    if snippets is None:
+        api_error_msg = str(api_error) if api_error else "unknown error"
+        if api_error and api_error.__class__.__name__ == "NoTranscriptFound" and "requested language codes: ['en']" in api_error_msg:
+            _record_missing_english_transcript(video_id, api_error_msg)
+            print(
+                f"Error: no English transcript available for {video_id}. "
+                "Recorded in data/transcript_unavailable.json.",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+        if ytdlp_error:
+            print(
+                f"Error: transcript fetch failed for {video_id}. "
+                f"youtube-transcript-api: {api_error_msg}. yt-dlp fallback: {ytdlp_error}",
+                file=sys.stderr,
+            )
+        else:
+            print(
+                f"Error: transcript fetch failed for {video_id}. "
+                f"youtube-transcript-api: {api_error_msg}.",
+                file=sys.stderr,
+            )
+        sys.exit(3)
 
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    tmp_dir = os.path.join(project_root, "tmp")
-    os.makedirs(tmp_dir, exist_ok=True)
-
-    # Save plain text version (word-wrapped paragraphs)
-    path = os.path.join(tmp_dir, f"transcript_{video_id}.txt")
-    words = text.split()
-    with open(path, "w") as f:
-        for i in range(0, len(words), 150):
-            f.write(" ".join(words[i:i + 150]) + "\n\n")
-
-    # Save timestamped JSON version
-    ts_path = os.path.join(tmp_dir, f"transcript_{video_id}_ts.json")
-    with open(ts_path, "w") as f:
-        json.dump(snippets, f, indent=2)
-
-    print(path)
-    print(ts_path)
+    _save_transcript_outputs(video_id, snippets)
 
 
 def main():

@@ -15,17 +15,22 @@ print(json.dumps({'title': item['title'], 'publishedAt': item['publishedAt'][:10
 "
 ```
 If the videoId is already in the indexed set, tell the user and stop.
+If the videoId is in `data/transcript_unavailable.json` with reason `missing_english_transcript`, tell the user and stop.
+If the videoId is in `data/video_skip_list.json`, tell the user and stop.
 
 $ARGUMENTS
 
 ## Step 1: Prerequisites
 
 1. Verify `youtube-transcript-api` is installed. If not, run `pip install youtube-transcript-api`.
-2. Verify the YouTube API key works by running: `python3 scripts/yt.py search "Q&A" 1`
+2. Verify `yt-dlp` is installed for transcript fallback. If not, run `pip install yt-dlp`.
+3. Verify the YouTube API key works by running: `python3 scripts/yt.py search "Q&A" 1`
 
 ## Step 2: Load Existing Data
 
 Read `data/fatwas.json` and collect all `videoId` values into a set of already-indexed IDs.
+Read `data/transcript_unavailable.json` and collect all `videoId` values whose `reason` is `missing_english_transcript` into a separate skip set.
+Read `data/video_skip_list.json` and collect all `videoId` values into a user-skip set.
 
 ## Step 3: Search for New Videos
 
@@ -38,13 +43,26 @@ python3 scripts/yt.py search "fatwa ruling halal haram" 10
 python3 scripts/yt.py search "permissible in islam" 10
 ```
 
-Collect all results, deduplicate by `videoId`, and remove any whose `videoId` is already in the indexed set.
+Collect all results, deduplicate by `videoId`, and remove any whose `videoId` is already in the indexed set, in the missing-English skip set, or in the user-skip set.
 
 Filter out videos that are clearly NOT fatwa/Q&A content based on their title (e.g., full-length lectures on seerah, tafsir series, khutbahs about general topics, Ramadan series, etc.). Keep only videos that look like they answer specific Islamic ruling questions.
+Also filter out YouTube Shorts by default. Exclude candidates if the title or description contains markers such as `#shorts`, `shorts`, `youtube shorts`, or obvious short-form clipping patterns.
 
 ## Step 4: Present Candidates
 
 Show the user a numbered list of candidate videos with title, date, and videoId. Ask which to process. The user can pick specific numbers, a range, or say "all".
+If the user picks only a subset, immediately add every non-selected candidate from that presented list to `data/video_skip_list.json` with:
+
+```json
+{
+  "videoId": "<videoId>",
+  "reason": "not_selected",
+  "note": "Auto-skipped because user did not select this candidate",
+  "createdAt": "<ISO timestamp>"
+}
+```
+
+If a `not_selected` entry for that `videoId` already exists, update `note` and set `updatedAt` to the current ISO timestamp.
 
 ## Step 5: Process Each Selected Video
 
@@ -59,6 +77,21 @@ This saves two files:
 - `tmp/transcript_<videoId>_ts.json` — timestamped JSON array where each entry has `{"text": "...", "start": <seconds>, "duration": <seconds>}`
 
 Read both files. If the transcript fetch fails (no captions available), skip the video and tell the user.
+`scripts/yt.py transcript` first tries `youtube-transcript-api`, then falls back to `yt-dlp` English subtitles if the first method fails.
+
+If the failure is specifically missing English transcript, record it in `data/transcript_unavailable.json` as:
+
+```json
+{
+  "videoId": "<videoId>",
+  "reason": "missing_english_transcript",
+  "firstCheckedAt": "<ISO timestamp>",
+  "lastCheckedAt": "<ISO timestamp>",
+  "lastError": "<error text>"
+}
+```
+
+If an entry for that `videoId` already exists with this reason, update `lastCheckedAt` and `lastError` only.
 
 ### 5b. Analyze the Transcript
 

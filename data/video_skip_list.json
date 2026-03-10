@@ -1,0 +1,38 @@
+[
+  {
+    "videoId": "1N257tDd1S0",
+    "reason": "not_selected",
+    "note": "Auto-skipped because user did not select this candidate",
+    "createdAt": "2026-03-09T23:44:47.756088+00:00"
+  },
+  {
+    "videoId": "_KM4X7Cm9ho",
+    "reason": "not_selected",
+    "note": "Auto-skipped because user did not select this candidate",
+    "createdAt": "2026-03-09T23:44:47.756088+00:00"
+  },
+  {
+    "videoId": "buPzuW9PuME",
+    "reason": "not_selected",
+    "note": "Auto-skipped because user did not select this candidate",
+    "createdAt": "2026-03-09T23:44:47.756088+00:00"
+  },
+  {
+    "videoId": "ix1wuNNVHNg",
+    "reason": "user_skipped_not_fatwa",
+    "note": "User requested skip during /add candidate selection",
+    "createdAt": "2026-03-09T23:00:00+00:00"
+  },
+  {
+    "videoId": "k-NKJknxuVM",
+    "reason": "user_skipped_not_fatwa",
+    "note": "User requested skip during /add candidate selection",
+    "createdAt": "2026-03-09T23:00:00+00:00"
+  },
+  {
+    "videoId": "r46qGl_A6TI",
+    "reason": "transcripts_disabled",
+    "note": "Subtitles are disabled for this video",
+    "createdAt": "2026-03-09T23:43:54.372276+00:00"
+  }
+]

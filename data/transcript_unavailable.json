@@ -1,0 +1,9 @@
+[
+  {
+    "videoId": "yk1Pfsuf83Y",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-09T23:31:03.670999+00:00",
+    "lastCheckedAt": "2026-03-09T23:31:03.670999+00:00",
+    "lastError": "\nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=yk1Pfsuf83Y! This is most likely caused by:\n\nNo transcripts were found for any of the requested language codes: ['en']\n\nFor this video (yk1Pfsuf83Y) transcripts are available in the following languages:\n\n(MANUALLY CREATED)\nNone\n\n(GENERATED)\n - ko (\"Korean (auto-generated)\")\n\n(TRANSLATION LANGUAGES)\nNone\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+  }
+]
