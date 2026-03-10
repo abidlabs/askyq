@@ -5,5 +5,117 @@
     "firstCheckedAt": "2026-03-09T23:31:03.670999+00:00",
     "lastCheckedAt": "2026-03-09T23:31:03.670999+00:00",
     "lastError": "\nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=yk1Pfsuf83Y! This is most likely caused by:\n\nNo transcripts were found for any of the requested language codes: ['en']\n\nFor this video (yk1Pfsuf83Y) transcripts are available in the following languages:\n\n(MANUALLY CREATED)\nNone\n\n(GENERATED)\n - ko (\"Korean (auto-generated)\")\n\n(TRANSLATION LANGUAGES)\nNone\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+  },
+  {
+    "videoId": "ZKZ4xjGypLQ",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for ZKZ4xjGypLQ. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=ZKZ4xjGypLQ! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "4QjFRqjl8Hg",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for 4QjFRqjl8Hg. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=4QjFRqjl8Hg! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "76UB_Aho9E4",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for 76UB_Aho9E4. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=76UB_Aho9E4! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "h8rkUR5yzZM",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for h8rkUR5yzZM. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=h8rkUR5yzZM! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "pGptAwRGwVU",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for pGptAwRGwVU. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=pGptAwRGwVU! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "XXjUqh7vpHo",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for XXjUqh7vpHo. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=XXjUqh7vpHo! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "2fuu1S7Rr6g",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for 2fuu1S7Rr6g. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=2fuu1S7Rr6g! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "zF8BAwzUnEk",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for zF8BAwzUnEk. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=zF8BAwzUnEk! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "A56TZFTHxmU",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for A56TZFTHxmU. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=A56TZFTHxmU! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "X3liehaz6_E",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for X3liehaz6_E. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=X3liehaz6_E! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "d06pfXTUQWs",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for d06pfXTUQWs. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=d06pfXTUQWs! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "8zGX5YmAKuM",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for 8zGX5YmAKuM. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=8zGX5YmAKuM! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "idLAsxM_DsU",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for idLAsxM_DsU. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=idLAsxM_DsU! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "Yw-bIh-Slso",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for Yw-bIh-Slso. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=Yw-bIh-Slso! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "lqdAzCAxuHU",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for lqdAzCAxuHU. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=lqdAzCAxuHU! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "i_Y9ghBMpOE",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
+    "lastError": "Error: transcript fetch failed for i_Y9ghBMpOE. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=i_Y9ghBMpOE! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
   }
 ]
