@@ -100,5 +100,29 @@
     "reason": "transcripts_disabled",
     "note": "Subtitles are disabled for this video",
     "createdAt": "2026-03-10T00:13:42.311177+00:00"
+  },
+  {
+    "videoId": "zFMRa9CWmy8",
+    "reason": "not_selected",
+    "note": "Auto-skipped because user did not select this candidate",
+    "createdAt": "2026-03-10T19:07:08.041106+00:00"
+  },
+  {
+    "videoId": "6r0r9Qzsx5E",
+    "reason": "not_selected",
+    "note": "Auto-skipped because user did not select this candidate",
+    "createdAt": "2026-03-10T19:07:08.041106+00:00"
+  },
+  {
+    "videoId": "bNB-Z--_U7E",
+    "reason": "not_selected",
+    "note": "Auto-skipped because user did not select this candidate",
+    "createdAt": "2026-03-10T19:07:08.041106+00:00"
+  },
+  {
+    "videoId": "WXMAjSmDydo",
+    "reason": "not_selected",
+    "note": "Auto-skipped because user did not select this candidate",
+    "createdAt": "2026-03-10T19:07:08.041106+00:00"
   }
 ]
