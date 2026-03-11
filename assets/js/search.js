@@ -246,46 +246,52 @@ function goToFatwa(id) {
   window.location.href = `./fatwa/${encodeURIComponent(id)}/`;
 }
 
+function makeRecentCard(fatwa) {
+  const card = document.createElement("a");
+  card.className = "fatwa-card";
+  card.href = `./fatwa/${encodeURIComponent(fatwa.id)}/`;
+
+  const cat = document.createElement("span");
+  cat.className = "fatwa-card-category";
+  cat.textContent = fatwa.category;
+
+  const title = document.createElement("p");
+  title.className = "fatwa-card-title";
+  title.textContent = fatwa.title;
+
+  const summary = document.createElement("p");
+  summary.className = "fatwa-card-summary";
+  summary.textContent = fatwa.summary;
+
+  const cardFooter = document.createElement("div");
+  cardFooter.className = "fatwa-card-footer";
+
+  const scholar = document.createElement("span");
+  scholar.className = "fatwa-card-scholar";
+  scholar.textContent = fatwa.scholar;
+
+  const date = document.createElement("span");
+  date.className = "fatwa-card-date";
+  date.textContent = `\u2022 ${new Date(fatwa.datePublished).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}`;
+
+  cardFooter.appendChild(scholar);
+  cardFooter.appendChild(date);
+
+  card.appendChild(cat);
+  card.appendChild(title);
+  card.appendChild(summary);
+  card.appendChild(cardFooter);
+  return card;
+}
+
 function renderRecentCards(list) {
   if (!recentGrid) return;
   recentGrid.innerHTML = "";
-  list.forEach((fatwa) => {
-    const card = document.createElement("a");
-    card.className = "fatwa-card";
-    card.href = `./fatwa/${encodeURIComponent(fatwa.id)}/`;
-
-    const cat = document.createElement("span");
-    cat.className = "fatwa-card-category";
-    cat.textContent = fatwa.category;
-
-    const title = document.createElement("p");
-    title.className = "fatwa-card-title";
-    title.textContent = fatwa.title;
-
-    const summary = document.createElement("p");
-    summary.className = "fatwa-card-summary";
-    summary.textContent = fatwa.summary;
-
-    const footer = document.createElement("div");
-    footer.className = "fatwa-card-footer";
-
-    const scholar = document.createElement("span");
-    scholar.className = "fatwa-card-scholar";
-    scholar.textContent = fatwa.scholar;
-
-    const date = document.createElement("span");
-    date.className = "fatwa-card-date";
-    date.textContent = `\u2022 ${new Date(fatwa.datePublished).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}`;
-
-    footer.appendChild(scholar);
-    footer.appendChild(date);
-
-    card.appendChild(cat);
-    card.appendChild(title);
-    card.appendChild(summary);
-    card.appendChild(footer);
-    recentGrid.appendChild(card);
-  });
+  const isTouchOrMobile = window.matchMedia("(pointer: coarse), (max-width: 768px)").matches;
+  list.forEach((fatwa) => recentGrid.appendChild(makeRecentCard(fatwa)));
+  if (!isTouchOrMobile) {
+    list.forEach((fatwa) => recentGrid.appendChild(makeRecentCard(fatwa)));
+  }
 }
 
 function spawnStars() {

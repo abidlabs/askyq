@@ -287,7 +287,16 @@
 
       <section class="related-section">
         <h2 class="related-heading">Related Rulings</h2>
-        <div class="recent-grid"><a class="fatwa-card" href="../../fatwa/reminding-parent-with-dementia-to-pray/">
+        <div class="recent-grid"><a class="fatwa-card" href="../../fatwa/praying-tarawih-behind-virtual-imam/">
+  <span class="fatwa-card-category">Worship &amp; Prayer</span>
+  <p class="fatwa-card-title">Can I pray Tarawih at home following a virtual imam via livestream?</p>
+  <p class="fatwa-card-summary">Praying behind a virtual or online imam does not constitute a valid jama&#039;a. Physical proximity is required by all four madhabs and no major fiqh council has permitted online congregational prayer, even during COVID-19. However, praying your own independent salah while listening to a live broadcast for motivation is technically permissible.</p>
+  <div class="fatwa-card-footer">
+    <span class="fatwa-card-scholar">Yasir Qadhi</span>
+    <span class="fatwa-card-date">&bull; April 14, 2020</span>
+  </div>
+</a>
+<a class="fatwa-card" href="../../fatwa/reminding-parent-with-dementia-to-pray/">
   <span class="fatwa-card-category">Worship &amp; Prayer</span>
   <p class="fatwa-card-title">Am I obliged to remind a parent suffering from dementia to pray?</p>
   <p class="fatwa-card-summary">When a person has dementia, the pen is lifted from them (no longer held accountable). Reminding them is good but not obligatory. In advanced stages, they lack the cognitive capacity required.</p>
@@ -313,21 +322,13 @@
     <span class="fatwa-card-scholar">Yasir Qadhi</span>
     <span class="fatwa-card-date">&bull; September 6, 2025</span>
   </div>
-</a>
-<a class="fatwa-card" href="../../fatwa/medical-emergency-during-salah/">
-  <span class="fatwa-card-category">Worship &amp; Prayer</span>
-  <p class="fatwa-card-title">Can you break your salah for a medical emergency in the masjid?</p>
-  <p class="fatwa-card-summary">It is not only permissible but obligatory to break one&#039;s salah to attend to a medical emergency. If someone faints or has a medical emergency during congregational prayer, the one or two people neares</p>
-  <div class="fatwa-card-footer">
-    <span class="fatwa-card-scholar">Yasir Qadhi</span>
-    <span class="fatwa-card-date">&bull; September 6, 2025</span>
-  </div>
 </a></div>
       </section>
 
-      <footer class="site-footer page-footer">
+      <footer class="site-footer page-footer" id="siteFooter">
+        <button class="footer-close" id="footerClose" aria-label="Dismiss">&times;</button>
         <div class="footer-stat">
-          <span class="stat-value">AskYQ</span>
+          <span class="stat-value" id="fatwaCount">AskYQ</span>
           <span class="stat-subvalue">Islamic rulings from Yasir Qadhi</span>
         </div>
         <div class="footer-disclaimer">
@@ -335,6 +336,22 @@
           <p>It is always best to consult with a trusted, local scholar for your questions.</p>
         </div>
       </footer>
+      <button class="footer-toggle" id="footerToggle" aria-label="Show footer">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 9.5L7 5.5L11 9.5"/></svg>
+      </button>
+      <script>
+      (function(){
+        var f=document.getElementById('siteFooter');
+        var t=document.getElementById('footerToggle');
+        var btn=document.getElementById('footerClose');
+        if(!f||!t) return;
+        function hide(){f.hidden=true;t.classList.add('visible');localStorage.setItem('footerDismissed','1');}
+        function show(){f.hidden=false;t.classList.remove('visible');localStorage.removeItem('footerDismissed');}
+        if(localStorage.getItem('footerDismissed')==='1') hide();
+        if(btn) btn.addEventListener('click',hide);
+        t.addEventListener('click',show);
+      })();
+      </script>
     </main>
   </body>
 </html>

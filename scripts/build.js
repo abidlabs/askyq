@@ -160,6 +160,40 @@ function getRelatedFatwas(fatwa, allFatwas, maxCount = 4) {
 }
 
 // ============================================================
+// FOOTER HTML (reused across pages)
+// ============================================================
+function footerHtml(statValue, statSubvalue, cssExtra) {
+  const cls = cssExtra ? `site-footer ${cssExtra}` : "site-footer";
+  return `<footer class="${cls}" id="siteFooter">
+        <button class="footer-close" id="footerClose" aria-label="Dismiss">&times;</button>
+        <div class="footer-stat">
+          <span class="stat-value" id="fatwaCount">${statValue}</span>
+          <span class="stat-subvalue">${statSubvalue}</span>
+        </div>
+        <div class="footer-disclaimer">
+          <p>Transcripts are AI-cleaned and AI-summarized, and may contain errors. <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a></p>
+          <p>It is always best to consult with a trusted, local scholar for your questions.</p>
+        </div>
+      </footer>
+      <button class="footer-toggle" id="footerToggle" aria-label="Show footer">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 9.5L7 5.5L11 9.5"/></svg>
+      </button>
+      <script>
+      (function(){
+        var f=document.getElementById('siteFooter');
+        var t=document.getElementById('footerToggle');
+        var btn=document.getElementById('footerClose');
+        if(!f||!t) return;
+        function hide(){f.hidden=true;t.classList.add('visible');localStorage.setItem('footerDismissed','1');}
+        function show(){f.hidden=false;t.classList.remove('visible');localStorage.removeItem('footerDismissed');}
+        if(localStorage.getItem('footerDismissed')==='1') hide();
+        if(btn) btn.addEventListener('click',hide);
+        t.addEventListener('click',show);
+      })();
+      </script>`;
+}
+
+// ============================================================
 // FATWA CARD HTML (reused across pages)
 // ============================================================
 function fatwaCardHtml(fatwa, basePath) {
@@ -347,16 +381,7 @@ function buildFatwaPage(fatwa, allFatwas) {
 
       ${relatedHtml}
 
-      <footer class="site-footer page-footer">
-        <div class="footer-stat">
-          <span class="stat-value">AskYQ</span>
-          <span class="stat-subvalue">Islamic rulings from Yasir Qadhi</span>
-        </div>
-        <div class="footer-disclaimer">
-          <p>Transcripts are AI-cleaned and AI-summarized, and may contain errors. <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a></p>
-          <p>It is always best to consult with a trusted, local scholar for your questions.</p>
-        </div>
-      </footer>
+      ${footerHtml("AskYQ", "Islamic rulings from Yasir Qadhi", "page-footer")}
     </main>
   </body>
 </html>`;
@@ -459,16 +484,7 @@ function buildCategoryPage(category, catFatwas, allCategories) {
         </div>
       </section>
 
-      <footer class="site-footer page-footer">
-        <div class="footer-stat">
-          <span class="stat-value">AskYQ</span>
-          <span class="stat-subvalue">Islamic rulings from Yasir Qadhi</span>
-        </div>
-        <div class="footer-disclaimer">
-          <p>Transcripts are AI-cleaned and AI-summarized, and may contain errors. <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a></p>
-          <p>It is always best to consult with a trusted, local scholar for your questions.</p>
-        </div>
-      </footer>
+      ${footerHtml("AskYQ", "Islamic rulings from Yasir Qadhi", "page-footer")}
     </main>
   </body>
 </html>`;
@@ -616,16 +632,7 @@ function buildHomepage(fatwas, categories) {
         </div>
       </section>
 
-      <footer class="site-footer">
-        <div class="footer-stat">
-          <span class="stat-value" id="fatwaCount">${fatwas.length} fatwas in database</span>
-          <span class="stat-subvalue">Transcripts cleaned and organized from video lectures</span>
-        </div>
-        <div class="footer-disclaimer">
-          <p>Transcripts are AI-cleaned and AI-summarized, and may contain errors. <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a></p>
-          <p>It is always best to consult with a trusted, local scholar for your questions.</p>
-        </div>
-      </footer>
+      ${footerHtml(`${fatwas.length} fatwas in database`, "Transcripts cleaned and organized from video lectures")}
     </main>
 
     <script type="module" src="./assets/js/search.js"></script>

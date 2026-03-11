@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AskYQ - Islamic Rulings &amp; Fatwas by Yasir Qadhi</title>
-    <meta name="description" content="Search 99 Islamic rulings and fatwas by Yasir Qadhi on topics like belief &amp; theology, daily life, death &amp; afterlife, dress &amp; appearance, family &amp; marriage, financial transactions, food &amp; drink, islamic practice, lifestyle &amp; dress, social issues, theology &amp; creed, worship &amp; prayer. AI-cleaned transcripts from YouTube Q&amp;A sessions." />
+    <meta name="description" content="Search 100 Islamic rulings and fatwas by Yasir Qadhi on topics like belief &amp; theology, daily life, death &amp; afterlife, dress &amp; appearance, family &amp; marriage, financial transactions, food &amp; drink, islamic practice, lifestyle &amp; dress, social issues, theology &amp; creed, worship &amp; prayer. AI-cleaned transcripts from YouTube Q&amp;A sessions." />
     <link rel="canonical" href="https://abidlabs.github.io/askyq/" />
     <meta property="og:title" content="AskYQ - Islamic Rulings &amp; Fatwas by Yasir Qadhi" />
     <meta property="og:description" content="Search fatwas and Islamic rulings derived from Yasir Qadhi&#039;s lectures and Q&amp;A sessions." />
@@ -574,6 +574,14 @@
     },
     {
       "@type": "Question",
+      "name": "Can I pray Tarawih at home following a virtual imam via livestream?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Praying behind a virtual or online imam does not constitute a valid jama'a. Physical proximity is required by all four madhabs and no major fiqh council has permitted online congregational prayer, even during COVID-19. However, praying your own independent salah while listening to a live broadcast for motivation is technically permissible."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "The Distance of 'Travel' - Part 2?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -1003,13 +1011,14 @@
 <a href="./category/lifestyle-and-dress/" class="category-chip">Lifestyle &amp; Dress <span class="chip-count">1</span></a>
 <a href="./category/social-issues/" class="category-chip">Social Issues <span class="chip-count">15</span></a>
 <a href="./category/theology-and-creed/" class="category-chip">Theology &amp; Creed <span class="chip-count">5</span></a>
-<a href="./category/worship-and-prayer/" class="category-chip">Worship &amp; Prayer <span class="chip-count">13</span></a>
+<a href="./category/worship-and-prayer/" class="category-chip">Worship &amp; Prayer <span class="chip-count">14</span></a>
         </div>
       </section>
 
-      <footer class="site-footer">
+      <footer class="site-footer" id="siteFooter">
+        <button class="footer-close" id="footerClose" aria-label="Dismiss">&times;</button>
         <div class="footer-stat">
-          <span class="stat-value" id="fatwaCount">99 fatwas in database</span>
+          <span class="stat-value" id="fatwaCount">100 fatwas in database</span>
           <span class="stat-subvalue">Transcripts cleaned and organized from video lectures</span>
         </div>
         <div class="footer-disclaimer">
@@ -1017,6 +1026,22 @@
           <p>It is always best to consult with a trusted, local scholar for your questions.</p>
         </div>
       </footer>
+      <button class="footer-toggle" id="footerToggle" aria-label="Show footer">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 9.5L7 5.5L11 9.5"/></svg>
+      </button>
+      <script>
+      (function(){
+        var f=document.getElementById('siteFooter');
+        var t=document.getElementById('footerToggle');
+        var btn=document.getElementById('footerClose');
+        if(!f||!t) return;
+        function hide(){f.hidden=true;t.classList.add('visible');localStorage.setItem('footerDismissed','1');}
+        function show(){f.hidden=false;t.classList.remove('visible');localStorage.removeItem('footerDismissed');}
+        if(localStorage.getItem('footerDismissed')==='1') hide();
+        if(btn) btn.addEventListener('click',hide);
+        t.addEventListener('click',show);
+      })();
+      </script>
     </main>
 
     <script type="module" src="./assets/js/search.js"></script>

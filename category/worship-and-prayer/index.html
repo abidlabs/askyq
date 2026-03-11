@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Worship &amp; Prayer | Islamic Rulings - AskYQ</title>
-    <meta name="description" content="Islamic rulings on worship &amp; prayer from Yasir Qadhi&#039;s lectures — 13 fatwas." />
+    <meta name="description" content="Islamic rulings on worship &amp; prayer from Yasir Qadhi&#039;s lectures — 14 fatwas." />
     <link rel="canonical" href="https://abidlabs.github.io/askyq/category/worship-and-prayer/" />
     <meta property="og:title" content="Worship &amp; Prayer | AskYQ" />
-    <meta property="og:description" content="Islamic rulings on worship &amp; prayer from Yasir Qadhi&#039;s lectures — 13 fatwas." />
+    <meta property="og:description" content="Islamic rulings on worship &amp; prayer from Yasir Qadhi&#039;s lectures — 14 fatwas." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://abidlabs.github.io/askyq/category/worship-and-prayer/" />
     <meta property="og:site_name" content="AskYQ" />
@@ -55,7 +55,7 @@
       <header class="category-header">
         <p class="eyebrow">Category</p>
         <h1 class="category-title">Worship &amp; Prayer</h1>
-        <p class="category-count">13 rulings</p>
+        <p class="category-count">14 rulings</p>
       </header>
 
       <div class="recent-grid category-grid">
@@ -158,6 +158,15 @@
     <span class="fatwa-card-date">&bull; March 9, 2021</span>
   </div>
 </a>
+<a class="fatwa-card" href="../../fatwa/praying-tarawih-behind-virtual-imam/">
+  <span class="fatwa-card-category">Worship &amp; Prayer</span>
+  <p class="fatwa-card-title">Can I pray Tarawih at home following a virtual imam via livestream?</p>
+  <p class="fatwa-card-summary">Praying behind a virtual or online imam does not constitute a valid jama&#039;a. Physical proximity is required by all four madhabs and no major fiqh council has permitted online congregational prayer, even during COVID-19. However, praying your own independent salah while listening to a live broadcast for motivation is technically permissible.</p>
+  <div class="fatwa-card-footer">
+    <span class="fatwa-card-scholar">Yasir Qadhi</span>
+    <span class="fatwa-card-date">&bull; April 14, 2020</span>
+  </div>
+</a>
 <a class="fatwa-card" href="../../fatwa/the-distance-of-travel-part-2/">
   <span class="fatwa-card-category">Worship &amp; Prayer</span>
   <p class="fatwa-card-title">The Distance of &#039;Travel&#039; - Part 2?</p>
@@ -195,9 +204,10 @@
         </div>
       </section>
 
-      <footer class="site-footer page-footer">
+      <footer class="site-footer page-footer" id="siteFooter">
+        <button class="footer-close" id="footerClose" aria-label="Dismiss">&times;</button>
         <div class="footer-stat">
-          <span class="stat-value">AskYQ</span>
+          <span class="stat-value" id="fatwaCount">AskYQ</span>
           <span class="stat-subvalue">Islamic rulings from Yasir Qadhi</span>
         </div>
         <div class="footer-disclaimer">
@@ -205,6 +215,22 @@
           <p>It is always best to consult with a trusted, local scholar for your questions.</p>
         </div>
       </footer>
+      <button class="footer-toggle" id="footerToggle" aria-label="Show footer">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 9.5L7 5.5L11 9.5"/></svg>
+      </button>
+      <script>
+      (function(){
+        var f=document.getElementById('siteFooter');
+        var t=document.getElementById('footerToggle');
+        var btn=document.getElementById('footerClose');
+        if(!f||!t) return;
+        function hide(){f.hidden=true;t.classList.add('visible');localStorage.setItem('footerDismissed','1');}
+        function show(){f.hidden=false;t.classList.remove('visible');localStorage.removeItem('footerDismissed');}
+        if(localStorage.getItem('footerDismissed')==='1') hide();
+        if(btn) btn.addEventListener('click',hide);
+        t.addEventListener('click',show);
+      })();
+      </script>
     </main>
   </body>
 </html>
