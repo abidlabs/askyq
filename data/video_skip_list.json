@@ -124,5 +124,11 @@
     "reason": "not_selected",
     "note": "Auto-skipped because user did not select this candidate",
     "createdAt": "2026-03-10T19:07:08.041106+00:00"
+  },
+  {
+    "videoId": "3YGxm_C5uWo",
+    "reason": "not_selected",
+    "note": "Auto-skipped because user did not select this candidate",
+    "createdAt": "2026-03-11T08:12:54.802295+00:00"
   }
 ]

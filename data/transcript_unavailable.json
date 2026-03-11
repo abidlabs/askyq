@@ -117,5 +117,54 @@
     "firstCheckedAt": "2026-03-10T18:51:08.944033+00:00",
     "lastCheckedAt": "2026-03-10T18:51:08.944033+00:00",
     "lastError": "Error: transcript fetch failed for i_Y9ghBMpOE. youtube-transcript-api: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=i_Y9ghBMpOE! This is most likely caused by:\n\nSubtitles are disabled for this video\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!. yt-dlp fallback: yt-dlp completed but no English subtitle file was produced"
+  },
+  {
+    "videoId": "AhpX881l7c4",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-11T08:13:44.493316+00:00",
+    "lastCheckedAt": "2026-03-11T08:16:31.520025+00:00",
+    "lastError": "\nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=AhpX881l7c4! This is most likely caused by:\n\nNo transcripts were found for any of the requested language codes: ['en']\n\nFor this video (AhpX881l7c4) transcripts are available in the following languages:\n\n(MANUALLY CREATED)\nNone\n\n(GENERATED)\n - nl (\"Dutch (auto-generated)\")[TRANSLATABLE]\n\n(TRANSLATION LANGUAGES)\n - en (\"English\")\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+  },
+  {
+    "videoId": "AyIw0CAo3Q4",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastError": "No English transcript available"
+  },
+  {
+    "videoId": "olY9jitiE8Y",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastError": "No English transcript available"
+  },
+  {
+    "videoId": "WPfAIdiJrvU",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastError": "No English transcript available"
+  },
+  {
+    "videoId": "grviK_JCKYM",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastError": "No English transcript available"
+  },
+  {
+    "videoId": "SEhaFkgm1bo",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastError": "No English transcript available"
+  },
+  {
+    "videoId": "TjFCF2QsMQ8",
+    "reason": "missing_english_transcript",
+    "firstCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastCheckedAt": "2026-03-11T08:18:32.061229+00:00",
+    "lastError": "No English transcript available"
   }
 ]
