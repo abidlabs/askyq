@@ -386,6 +386,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/islamic-obligations-special-needs-child/</loc>
+    <lastmod>2019-11-13</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/fatwa/is-gelatin-in-medicinal-tablets-permissible/</loc>
     <lastmod>2019-11-10</lastmod>
     <priority>0.8</priority>
@@ -406,8 +411,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/is-salat-al-shukr-sunnah/</loc>
+    <lastmod>2019-10-23</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/fatwa/can-we-participate-in-a-competition-with-a-fee-and-a-prize/</loc>
     <lastmod>2019-10-18</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/breaking-oath-in-allahs-name-kaffarah/</loc>
+    <lastmod>2019-10-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -431,8 +446,28 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/did-the-prophet-see-allah/</loc>
+    <lastmod>2019-09-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/fatwa/what-are-the-conditions-to-make-an-animal-halal/</loc>
     <lastmod>2019-09-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/which-actions-of-the-prophet-are-binding/</loc>
+    <lastmod>2019-09-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/is-the-term-sunni-islam-divisive/</loc>
+    <lastmod>2019-09-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/lowering-pants-below-ankles-in-islam/</loc>
+    <lastmod>2019-09-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -446,9 +481,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/can-muslims-use-western-courts-for-marriage-disputes/</loc>
+    <lastmod>2019-08-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/is-einsteins-theory-of-relativity-shirk/</loc>
+    <lastmod>2019-08-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/is-it-permissible-to-carry-a-quran-for-baraka/</loc>
+    <lastmod>2019-08-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/fatwa/insurance-in-islam/</loc>
     <lastmod>2019-03-15</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/belief-and-theology/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://abidlabs.github.io/askyq/category/daily-life/</loc>
@@ -477,6 +532,16 @@
   </url>
   <url>
     <loc>https://abidlabs.github.io/askyq/category/food-and-drink/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/islamic-practice/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/lifestyle-and-dress/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
