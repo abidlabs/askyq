@@ -331,8 +331,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/can-muslims-inherit-from-non-muslims/</loc>
+    <lastmod>2020-08-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/fatwa/the-ruling-on-shrimp-and-seafood/</loc>
     <lastmod>2020-08-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/can-women-recite-quran-during-menses/</loc>
+    <lastmod>2020-08-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -341,8 +351,33 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/eating-meat-of-ahlul-kitab-in-the-west/</loc>
+    <lastmod>2020-07-01</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/islamic-etiquette-when-someone-passes-away/</loc>
+    <lastmod>2020-06-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/widows-iddah-haddad-ruling/</loc>
+    <lastmod>2020-06-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/fatwa/praying-tarawih-behind-virtual-imam/</loc>
     <lastmod>2020-04-15</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/is-taking-medicine-obligatory/</loc>
+    <lastmod>2020-03-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/dealing-with-abusive-parents/</loc>
+    <lastmod>2020-02-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -531,12 +566,32 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/category/family-and-relationships/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/category/financial-transactions/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/category/food-and-diet/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/category/food-and-drink/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/health-and-medicine/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/inheritance-and-finance/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
@@ -551,12 +606,22 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/category/marriage-and-family/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/category/social-issues/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://abidlabs.github.io/askyq/category/theology-and-creed/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/women-s-issues/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
