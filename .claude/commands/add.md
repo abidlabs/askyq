@@ -168,17 +168,28 @@ For each identified topic, create two things:
 
 ### Transcript Cleaning Guidelines
 
-The raw YouTube auto-captions need significant cleanup. Transform them into well-structured Markdown:
+The raw YouTube auto-captions need significant cleanup. Transform them into well-structured, polished Markdown prose that reads like a clean article — but **faithfully reports what was said**. Do not summarize, omit arguments, or restructure the logic. The goal is readability, not compression.
 
+**Content faithfulness rules (critical):**
+- Report everything Yasir Qadhi said — every argument, example, analogy, hadith, and nuance
+- Do **not** summarize or collapse multiple paragraphs into one sentence
+- Do **not** add content or arguments that weren't in the video
+- The cleaned transcript should feel like reading a well-edited transcript of the talk, not a condensed summary of it
+
+**Formatting and style:**
 1. **Start with** `## Summary of Yasir Qadhi's Position` — a bullet-point summary of his key conclusions
-2. **Follow with** `## Full Lecture Transcript (Cleaned)` — the organized, readable transcript
-3. Fix capitalization, punctuation, and grammar errors from auto-captions
-4. Add paragraph breaks at natural topic transitions
-5. Add Markdown headings (`###`) for major sections within the transcript
-6. Preserve Arabic/Islamic terms with proper transliteration (e.g., gharar, riba, darurah, tawakkul, qadr)
-7. Use **bold** for key terms and rulings
-8. If the video covers multiple topics, each topic's transcript should contain only the relevant portion
-9. Include the source video link in the summary section: `In a [YYYY video](videoUrl), Yasir Qadhi...`
+2. **Follow with** `## Full Lecture Transcript (Cleaned)` — the full, organized, readable transcript
+3. Write in flowing prose paragraphs, not lists (except where Yasir Qadhi himself enumerated points)
+4. Fix capitalization, punctuation, grammar errors, and filler words (`um`, `uh`, `you know`, `so basically`, etc.) from auto-captions
+5. Fix typos and broken words from auto-captions (e.g., `i slam` → `Islam`, `al hamdulillah` → `alhamdulillah`)
+6. Add paragraph breaks at natural topic transitions within each section
+7. Add Markdown headings (`###`) for major sections within the transcript
+8. Preserve Arabic/Islamic terms with proper transliteration (e.g., gharar, riba, darurah, tawakkul, qadr)
+9. Use **bold** for key rulings, verdicts, and important Islamic terms
+10. If the video covers multiple topics, each topic's transcript should contain only the relevant portion
+11. Include the source video link in the summary section: `In a [YYYY video](videoUrl), Yasir Qadhi...`
+
+The reference style target is the `halal-meat-when-visiting-others` article. Read `api/fatwas/halal-meat-when-visiting-others.json` if you need a concrete example of the desired tone and structure.
 
 ### Timestamp Links in Transcripts
 
