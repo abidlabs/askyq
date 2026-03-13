@@ -236,13 +236,68 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/working-for-company-with-haram-dealings/</loc>
+    <lastmod>2022-03-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/fatwa/ruling-on-hijab-in-islam/</loc>
     <lastmod>2022-02-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/why-are-hijab-bans-happening/</loc>
+    <lastmod>2022-02-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/misyar-urfi-secret-marriages/</loc>
+    <lastmod>2022-02-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/how-to-pray-salat-al-janazah/</loc>
+    <lastmod>2022-01-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/fiqh-of-corporate-office-life/</loc>
+    <lastmod>2022-01-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/fatwa/is-missing-salah-worse-than-murder/</loc>
     <lastmod>2022-01-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/major-and-minor-sins-in-islam/</loc>
+    <lastmod>2022-01-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/zakat-on-gold-silver-jewelry/</loc>
+    <lastmod>2022-01-05</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/suicide-narration-in-the-seerah/</loc>
+    <lastmod>2021-12-29</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/making-dua-against-someone-who-wronged-you/</loc>
+    <lastmod>2021-12-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/muslims-helping-rebuild-temples-and-churches/</loc>
+    <lastmod>2021-12-15</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/is-friday-khutbah-required-to-be-in-arabic/</loc>
+    <lastmod>2021-12-08</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -541,6 +596,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/category/aqeedah-and-theology/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/category/belief-and-theology/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
@@ -556,7 +616,17 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/category/death-and-funerals/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/category/dress-and-appearance/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/dua-and-supplication/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
@@ -567,6 +637,11 @@
   </url>
   <url>
     <loc>https://abidlabs.github.io/askyq/category/family-and-relationships/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/finance-and-business/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
@@ -611,6 +686,16 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/category/prophetic-biography-seerah/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/social-and-political-issues/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/category/social-issues/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
@@ -626,7 +711,22 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/category/work-and-career/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/worship-and-fiqh/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/category/worship-and-prayer/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/zakat-and-charity/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
