@@ -102,21 +102,55 @@ def _normalize_text(text):
     return " ".join(html.unescape(text).replace("\n", " ").split()).strip()
 
 
+def _cookies_file():
+    """Return path to a Netscape cookies file if one exists, else None."""
+    _load_env()
+    explicit = os.environ.get("YT_COOKIES_FILE", "")
+    if explicit and os.path.exists(explicit):
+        return explicit
+    default = os.path.expanduser("~/.yt-cookies.txt")
+    if os.path.exists(default):
+        return default
+    return None
+
+
+def _requests_session_with_cookies(cookies_path):
+    """Build a requests.Session pre-loaded with cookies from a Netscape cookie file."""
+    try:
+        import requests
+    except ImportError:
+        return None
+    session = requests.Session()
+    with open(cookies_path) as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = line.split("\t")
+            if len(parts) < 7:
+                continue
+            domain, _, path, secure, _expires, name, value = parts[:7]
+            session.cookies.set(name, value, domain=domain, path=path)
+    return session
+
+
 def _fetch_transcript_via_api(video_id):
     try:
         from youtube_transcript_api import YouTubeTranscriptApi
     except ImportError as exc:
         raise RuntimeError("youtube-transcript-api is not installed") from exc
     try:
-        try:
+        cookies_path = _cookies_file()
+        if cookies_path:
+            session = _requests_session_with_cookies(cookies_path)
+            api = YouTubeTranscriptApi(http_client=session) if session else YouTubeTranscriptApi()
+        else:
             api = YouTubeTranscriptApi()
-            t = api.fetch(video_id, languages=["en"])
-            return [{"text": _normalize_text(s.text), "start": s.start, "duration": s.duration} for s in t]
-        except (TypeError, AttributeError):
-            t = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
-            return [{"text": _normalize_text(s["text"]), "start": s["start"], "duration": s["duration"]} for s in t]
-    except Exception as exc:
-        raise exc
+        t = api.fetch(video_id, languages=["en"])
+        return [{"text": _normalize_text(s.text), "start": s.start, "duration": s.duration} for s in t]
+    except (TypeError, AttributeError):
+        t = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
+        return [{"text": _normalize_text(s["text"]), "start": s["start"], "duration": s["duration"]} for s in t]
 
 
 def _fetch_transcript_via_ytdlp(video_id):
@@ -124,19 +158,21 @@ def _fetch_transcript_via_ytdlp(video_id):
     os.makedirs(output_base, exist_ok=True)
     output_template = os.path.join(output_base, f"{video_id}.%(ext)s")
     url = f"https://www.youtube.com/watch?v={video_id}"
+    cookies_path = _cookies_file()
     cmd = [
         "yt-dlp",
+        "--js-runtimes", "node",
+        "--remote-components", "ejs:github",
         "--skip-download",
         "--write-subs",
         "--write-auto-subs",
-        "--sub-langs",
-        "en.*",
-        "--sub-format",
-        "json3",
-        "-o",
-        output_template,
-        url,
+        "--sub-langs", "en.*",
+        "--sub-format", "json3",
+        "-o", output_template,
     ]
+    if cookies_path:
+        cmd += ["--cookies", cookies_path, "--impersonate", "chrome"]
+    cmd += [url]
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
         msg = (result.stderr or result.stdout or "yt-dlp failed").strip()
