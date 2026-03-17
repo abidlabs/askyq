@@ -6,6 +6,46 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/age-of-aisha-is-rejecting-it-heresy/</loc>
+    <lastmod>2026-03-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/do-muslims-need-scholars-for-spirituality/</loc>
+    <lastmod>2026-03-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/jinn-vs-mental-health-how-to-distinguish/</loc>
+    <lastmod>2026-03-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/muslim-charity-overhead-influencer-fees/</loc>
+    <lastmod>2026-03-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/muslim-festivals-suhoor-fests-permissible/</loc>
+    <lastmod>2026-03-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/non-muslim-couple-marriage-valid-after-conversion/</loc>
+    <lastmod>2026-03-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/talking-to-opposite-gender-islam/</loc>
+    <lastmod>2026-03-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/fatwa/war-ethics-weapons-mass-destruction-islam/</loc>
+    <lastmod>2026-03-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://abidlabs.github.io/askyq/fatwa/ruling-on-celebrating-religious-holidays-of-other-faiths/</loc>
     <lastmod>2025-12-20</lastmod>
     <priority>0.8</priority>
@@ -962,6 +1002,11 @@
   </url>
   <url>
     <loc>https://abidlabs.github.io/askyq/category/marriage-and-family/</loc>
+    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://abidlabs.github.io/askyq/category/other/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
