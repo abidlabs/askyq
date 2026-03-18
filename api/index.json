@@ -6,5 +6,5 @@
     "fatwaList": "/data/fatwas.json",
     "fatwaByIdTemplate": "/api/fatwas/{id}.json"
   },
-  "fatwaCount": 182
+  "fatwaCount": 188
 }
