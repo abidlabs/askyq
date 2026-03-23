@@ -66,6 +66,23 @@ function parseYouTubeTimeFromHref(href) {
   }
 }
 
+function parseYouTubeVideoIdFromHref(href) {
+  try {
+    const u = new URL(href, window.location.href);
+    const host = u.hostname.replace(/^www\./, "").toLowerCase();
+    if (host === "youtube.com" || host === "m.youtube.com") {
+      return u.searchParams.get("v");
+    }
+    if (host === "youtu.be") {
+      const id = u.pathname.replace(/^\/+/, "").split("/")[0];
+      return id || null;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 function collectAnchors(article) {
   const links = article.querySelectorAll(
     'a[href*="youtube.com/watch"], a[href*="youtu.be/"]'
@@ -188,6 +205,8 @@ function init() {
   let playing = false;
   let playTimer = null;
   let availableRates = null;
+  let pendingSeekTime = null;
+  let pendingAutoplay = false;
 
   function rebuildAnchors() {
     anchorPoints = collectAnchors(article);
@@ -275,6 +294,27 @@ function init() {
       player.seekTo(t, true);
       player.playVideo();
     }
+  });
+
+  article.addEventListener("click", (ev) => {
+    const target = ev.target;
+    if (!(target instanceof Element)) return;
+    const anchor = target.closest("a");
+    if (!(anchor instanceof HTMLAnchorElement)) return;
+    const t = parseYouTubeTimeFromHref(anchor.href);
+    if (!Number.isFinite(t)) return;
+    const targetVideoId = parseYouTubeVideoIdFromHref(anchor.href);
+    if (targetVideoId && targetVideoId !== videoId) return;
+    ev.preventDefault();
+    const safeTime = Math.max(0, t);
+    if (!player || !playerReady) {
+      pendingSeekTime = safeTime;
+      pendingAutoplay = true;
+      updateUI(safeTime);
+      return;
+    }
+    player.seekTo(safeTime, true);
+    player.playVideo();
   });
 
   function applyPlaybackRate(rate) {
@@ -406,6 +446,16 @@ function init() {
             initial = sorted[0];
           }
           applyPlaybackRate(initial);
+          if (Number.isFinite(pendingSeekTime)) {
+            e.target.seekTo(Math.max(0, pendingSeekTime), true);
+            if (pendingAutoplay) {
+              e.target.playVideo();
+            } else {
+              tick();
+            }
+            pendingSeekTime = null;
+            pendingAutoplay = false;
+          }
           tick();
         },
         onStateChange: onStateChange,
