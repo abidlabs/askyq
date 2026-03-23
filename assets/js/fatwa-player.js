@@ -121,19 +121,21 @@ function mapScrollToTime(refY, points, durationSec, article) {
 function loadYouTubeAPI() {
   return new Promise((resolve) => {
     if (window.YT && window.YT.Player) {
-      resolve();
+      resolve(true);
       return;
     }
+    const timeout = window.setTimeout(() => resolve(false), 8000);
     let settled = false;
-    const finish = () => {
+    const finish = (ok) => {
       if (settled) return;
       settled = true;
-      resolve();
+      window.clearTimeout(timeout);
+      resolve(ok);
     };
     const prev = window.onYouTubeIframeAPIReady;
     window.onYouTubeIframeAPIReady = () => {
       if (typeof prev === "function") prev();
-      finish();
+      finish(true);
     };
     if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
       const tag = document.createElement("script");
@@ -143,7 +145,7 @@ function loadYouTubeAPI() {
       const poll = window.setInterval(() => {
         if (window.YT && window.YT.Player) {
           window.clearInterval(poll);
-          finish();
+          finish(true);
         }
       }, 40);
     }
@@ -185,6 +187,7 @@ function init() {
   let playerReady = false;
   let playing = false;
   let playTimer = null;
+  let availableRates = null;
 
   function rebuildAnchors() {
     anchorPoints = collectAnchors(article);
@@ -277,17 +280,26 @@ function init() {
   function applyPlaybackRate(rate) {
     if (!player || !playerReady) return;
     if (!Number.isFinite(rate)) return;
+    let desired = rate;
+    if (Array.isArray(availableRates) && availableRates.length) {
+      if (!availableRates.some((x) => Math.abs(x - desired) < 0.01)) {
+        const sorted = [...availableRates].sort(
+          (a, b) => Math.abs(a - desired) - Math.abs(b - desired)
+        );
+        desired = sorted[0];
+      }
+    }
     try {
-      player.setPlaybackRate(rate);
+      player.setPlaybackRate(desired);
     } catch {
       return;
     }
-    let forUi = rate;
+    let forUi = desired;
     try {
       const actual = player.getPlaybackRate();
       if (
         Number.isFinite(actual) &&
-        Math.abs(actual - rate) < 0.06
+        Math.abs(actual - desired) < 0.06
       ) {
         forUi = actual;
       }
@@ -321,17 +333,44 @@ function init() {
     syncSpeedButtons(r);
   }
 
+  function updateSpeedButtonAvailability() {
+    if (!speedBar) return;
+    const buttons = speedBar.querySelectorAll(".fatwa-video-speed__btn");
+    buttons.forEach((b) => {
+      const r = Number.parseFloat(b.dataset.rate);
+      const enabled =
+        !Array.isArray(availableRates) ||
+        !availableRates.length ||
+        availableRates.some((x) => Math.abs(x - r) < 0.01);
+      b.disabled = !enabled;
+      b.setAttribute("aria-disabled", enabled ? "false" : "true");
+    });
+  }
+
   if (speedBar) {
     speedBar.addEventListener("click", (ev) => {
       const t = ev.target;
       if (!(t instanceof HTMLButtonElement) || !t.dataset.rate) return;
+      if (t.disabled) return;
       const rate = Number.parseFloat(t.dataset.rate);
       if (!Number.isFinite(rate)) return;
       applyPlaybackRate(rate);
     });
   }
 
-  loadYouTubeAPI().then(() => {
+  loadYouTubeAPI().then((ok) => {
+    if (!ok || !(window.YT && window.YT.Player)) {
+      btn.disabled = true;
+      btn.setAttribute("aria-disabled", "true");
+      if (speedBar) {
+        const buttons = speedBar.querySelectorAll(".fatwa-video-speed__btn");
+        buttons.forEach((b) => {
+          b.disabled = true;
+          b.setAttribute("aria-disabled", "true");
+        });
+      }
+      return;
+    }
     player = new window.YT.Player(host, {
       videoId,
       width: 1,
@@ -348,19 +387,20 @@ function init() {
           if (!Number.isFinite(duration) || duration <= 0) duration = 0;
           rebuildAnchors();
           let initial = readStoredPlaybackRate();
-          const available = (() => {
+          availableRates = (() => {
             try {
               return e.target.getAvailablePlaybackRates();
             } catch {
               return null;
             }
           })();
+          updateSpeedButtonAvailability();
           if (
-            Array.isArray(available) &&
-            available.length &&
-            !available.some((x) => Math.abs(x - initial) < 0.01)
+            Array.isArray(availableRates) &&
+            availableRates.length &&
+            !availableRates.some((x) => Math.abs(x - initial) < 0.01)
           ) {
-            const sorted = [...available].sort(
+            const sorted = [...availableRates].sort(
               (a, b) => Math.abs(a - initial) - Math.abs(b - initial)
             );
             initial = sorted[0];
