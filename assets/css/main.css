@@ -645,19 +645,29 @@ body.has-fatwa-video {
   color: var(--text-dim);
 }
 
+.fatwa-video-playcol {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  align-self: center;
+}
+
 .fatwa-video-speed {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 6px;
-  margin-top: 2px;
+  justify-content: center;
+  gap: 4px;
 }
 
 .fatwa-video-speed__btn {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  padding: 4px 10px;
+  padding: 3px 7px;
   border-radius: 6px;
   border: 1px solid var(--border-soft);
   background: var(--bg);
@@ -701,7 +711,6 @@ body.has-fatwa-video {
 
 .fatwa-video-playbtn {
   flex-shrink: 0;
-  align-self: center;
   width: 48px;
   height: 48px;
   border-radius: 50%;

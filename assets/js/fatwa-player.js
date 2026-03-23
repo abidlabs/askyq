@@ -1,6 +1,34 @@
 const YT_PLAYING = 1;
 const RATE_STORAGE_KEY = "fatwaPlaybackRate";
-const RATE_OPTIONS = [0.5, 1, 2];
+const RATE_OPTIONS = [0.5, 1, 1.5];
+
+function readStoredPlaybackRate() {
+  let r = 1;
+  try {
+    const saved = localStorage.getItem(RATE_STORAGE_KEY);
+    if (saved != null) {
+      const p = Number.parseFloat(saved);
+      if (Number.isFinite(p)) r = p;
+    }
+  } catch {
+    /* ignore */
+  }
+  return r;
+}
+
+function nearestRateOption(rate) {
+  if (!Number.isFinite(rate)) return 1;
+  let best = RATE_OPTIONS[1];
+  let bestDiff = Infinity;
+  for (const opt of RATE_OPTIONS) {
+    const d = Math.abs(opt - rate);
+    if (d < bestDiff) {
+      bestDiff = d;
+      best = opt;
+    }
+  }
+  return best;
+}
 
 function formatTime(sec) {
   if (!Number.isFinite(sec) || sec < 0) return "0:00";
@@ -134,6 +162,20 @@ function init() {
 
   if (!dock || !host || !article || !fill || !curEl || !durEl || !btn) return;
 
+  function syncSpeedButtons(activeRate) {
+    if (!speedBar) return;
+    const best = nearestRateOption(activeRate);
+    const buttons = speedBar.querySelectorAll(".fatwa-video-speed__btn");
+    buttons.forEach((b) => {
+      const r = Number.parseFloat(b.dataset.rate);
+      b.classList.toggle("is-active", Math.abs(r - best) < 0.01);
+    });
+  }
+
+  if (speedBar) {
+    syncSpeedButtons(readStoredPlaybackRate());
+  }
+
   const videoId = dock.dataset.videoId;
   if (!videoId) return;
 
@@ -232,43 +274,51 @@ function init() {
     }
   });
 
-  function syncSpeedButtons(activeRate) {
-    if (!speedBar) return;
-    const buttons = speedBar.querySelectorAll(".fatwa-video-speed__btn");
-    let best = RATE_OPTIONS[1];
-    let bestDiff = Infinity;
-    for (const opt of RATE_OPTIONS) {
-      const d = Math.abs(opt - activeRate);
-      if (d < bestDiff) {
-        bestDiff = d;
-        best = opt;
-      }
-    }
-    buttons.forEach((b) => {
-      const r = Number.parseFloat(b.dataset.rate);
-      b.classList.toggle("is-active", Math.abs(r - best) < 0.01);
-    });
-  }
-
   function applyPlaybackRate(rate) {
     if (!player || !playerReady) return;
+    if (!Number.isFinite(rate)) return;
     try {
       player.setPlaybackRate(rate);
     } catch {
       return;
     }
-    let actual = rate;
+    let forUi = rate;
     try {
-      actual = player.getPlaybackRate();
+      const actual = player.getPlaybackRate();
+      if (
+        Number.isFinite(actual) &&
+        Math.abs(actual - rate) < 0.06
+      ) {
+        forUi = actual;
+      }
     } catch {
-      actual = rate;
+      /* keep rate */
     }
     try {
-      localStorage.setItem(RATE_STORAGE_KEY, String(actual));
+      localStorage.setItem(RATE_STORAGE_KEY, String(forUi));
     } catch {
       /* ignore */
     }
-    syncSpeedButtons(actual);
+    syncSpeedButtons(forUi);
+  }
+
+  function onPlaybackRateChange(e) {
+    if (!playerReady) return;
+    let r = e.data;
+    if (!Number.isFinite(r)) {
+      try {
+        r = e.target.getPlaybackRate();
+      } catch {
+        return;
+      }
+    }
+    if (!Number.isFinite(r)) return;
+    try {
+      localStorage.setItem(RATE_STORAGE_KEY, String(r));
+    } catch {
+      /* ignore */
+    }
+    syncSpeedButtons(r);
   }
 
   if (speedBar) {
@@ -297,16 +347,7 @@ function init() {
           duration = e.target.getDuration();
           if (!Number.isFinite(duration) || duration <= 0) duration = 0;
           rebuildAnchors();
-          let initial = 1;
-          try {
-            const saved = localStorage.getItem(RATE_STORAGE_KEY);
-            if (saved != null) {
-              const p = Number.parseFloat(saved);
-              if (Number.isFinite(p)) initial = p;
-            }
-          } catch {
-            /* ignore */
-          }
+          let initial = readStoredPlaybackRate();
           const available = (() => {
             try {
               return e.target.getAvailablePlaybackRates();
@@ -328,6 +369,7 @@ function init() {
           tick();
         },
         onStateChange: onStateChange,
+        onPlaybackRateChange: onPlaybackRateChange,
       },
     });
   });

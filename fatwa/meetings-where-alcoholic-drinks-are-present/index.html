@@ -283,18 +283,20 @@
             <span class="fatwa-video-times" aria-live="polite">
               <span id="fatwaTimeCurrent">0:00</span><span class="fatwa-video-times__sep"> / </span><span id="fatwaTimeDuration">--:--</span>
             </span>
-            <div class="fatwa-video-speed" role="group" aria-label="Playback speed">
-              <button type="button" class="fatwa-video-speed__btn" data-rate="0.5">0.5×</button>
-              <button type="button" class="fatwa-video-speed__btn is-active" data-rate="1">1×</button>
-              <button type="button" class="fatwa-video-speed__btn" data-rate="2">2×</button>
-            </div>
             <p class="fatwa-video-disclaimer">Transcripts are AI-cleaned and may contain errors. Listen to the original video to verify.</p>
           </div>
         </div>
-        <button type="button" class="fatwa-video-playbtn" id="fatwaPlayBtn" aria-label="Play or pause video">
-          <svg class="fatwa-video-playbtn__icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          <svg class="fatwa-video-playbtn__icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-        </button>
+        <div class="fatwa-video-playcol">
+          <button type="button" class="fatwa-video-playbtn" id="fatwaPlayBtn" aria-label="Play or pause video">
+            <svg class="fatwa-video-playbtn__icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="fatwa-video-playbtn__icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <div class="fatwa-video-speed" role="group" aria-label="Playback speed">
+            <button type="button" class="fatwa-video-speed__btn" data-rate="0.5">0.5×</button>
+            <button type="button" class="fatwa-video-speed__btn is-active" data-rate="1">1×</button>
+            <button type="button" class="fatwa-video-speed__btn" data-rate="1.5">1.5×</button>
+          </div>
+        </div>
       </div>
       <div class="fatwa-yt-host" id="fatwaYtPlayerHost" aria-hidden="true"></div>
     </footer>
