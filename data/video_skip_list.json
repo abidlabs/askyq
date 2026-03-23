@@ -326,5 +326,17 @@
     "videoId": "xr_ALNRjQK8",
     "reason": "transcript_unavailable",
     "addedAt": "2026-03-12T19:32:19.677660+00:00"
+  },
+  {
+    "videoId": "OieTqgdYZXo",
+    "reason": "not_selected",
+    "note": "User excluded COVID-era Q&A videos from indexing batch",
+    "createdAt": "2026-03-23T15:40:56.244634+00:00"
+  },
+  {
+    "videoId": "Y58CRgz75yU",
+    "reason": "not_selected",
+    "note": "User excluded COVID-era Q&A videos from indexing batch",
+    "createdAt": "2026-03-23T15:40:56.244634+00:00"
   }
 ]
