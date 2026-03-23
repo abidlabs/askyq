@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import os
+import shutil
 import subprocess
 import sys
 
@@ -21,13 +22,26 @@ A_IPV6 = [
 ]
 
 
-def zone_id() -> str:
+def aws_cmd() -> str:
+    exe = os.environ.get("AWS_BIN") or shutil.which("aws")
+    if not exe:
+        print(
+            "AWS CLI not found. Install it and ensure `aws` is on PATH, or set AWS_BIN.\n"
+            "  macOS: brew install awscli\n"
+            "  https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    return exe
+
+
+def zone_id(aws: str) -> str:
     z = os.environ.get("HOSTED_ZONE_ID")
     if z:
         return z.removeprefix("/hostedzone/")
     out = subprocess.check_output(
         [
-            "aws",
+            aws,
             "route53",
             "list-hosted-zones-by-name",
             "--dns-name",
@@ -46,7 +60,8 @@ def zone_id() -> str:
 
 
 def main() -> None:
-    zid = zone_id()
+    aws = aws_cmd()
+    zid = zone_id(aws)
     changes = [
         {
             "Action": "UPSERT",
@@ -79,7 +94,7 @@ def main() -> None:
     batch = {"Comment": f"GitHub Pages {DOMAIN}", "Changes": changes}
     subprocess.run(
         [
-            "aws",
+            aws,
             "route53",
             "change-resource-record-sets",
             "--hosted-zone-id",

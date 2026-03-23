@@ -8,7 +8,7 @@ At your domain registrar, set **nameservers** to the four NS values from the Rou
 
 ## 2. Route 53 records (programmatic)
 
-Requires [AWS CLI](https://docs.aws.amazon.com/cli/) configured (`aws sts get-caller-identity` works).
+Requires the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) on your `PATH` (the script runs `aws`, not boto3). On macOS: `brew install awscli`. Then configure credentials (`aws sts get-caller-identity` should succeed). If the binary lives elsewhere, set `AWS_BIN=/full/path/to/aws`.
 
 ```bash
 cd /path/to/askyq
@@ -23,6 +23,7 @@ Optional environment variables:
 | `DOMAIN` | `askqadi.org` | Apex domain |
 | `HOSTED_ZONE_ID` | (auto) | Route 53 zone id if auto-detect fails |
 | `GITHUB_PAGES_TARGET` | `abidlabs.github.io` | CNAME target for `www` (see below) |
+| `AWS_BIN` | (search `PATH`) | Path to `aws` if not on `PATH` |
 
 If GitHub Pages is served from **your fork** (`youruser.github.io/askyq`), set:
 
@@ -30,14 +31,18 @@ If GitHub Pages is served from **your fork** (`youruser.github.io/askyq`), set:
 
 ## 3. GitHub: custom domain + HTTPS
 
-Someone with **admin** on the GitHub repo must enable Pages (if needed) and set the custom domain.
+Use a GitHub account that has **admin** on `abidlabs/askyq` (`gh auth login`). If `PATCH .../pages` returned **404**, GitHub Pages was not enabled yet; `github_pages_set_domain.sh` now **creates** a legacy Pages site (deploy from branch `main`, `/`) then sets the custom domain.
 
-With [GitHub CLI](https://cli.github.com/) (`gh auth login`):
+If you still get **404**, the authenticated user cannot access that API (wrong account or no org permission). If you use **GitHub Actions** for Pages instead of branch deploy, create the site from the UI once, then run the script again.
+
+With [GitHub CLI](https://cli.github.com/):
 
 ```bash
 chmod +x scripts/deploy/github_pages_set_domain.sh
 GITHUB_OWNER=abidlabs GITHUB_REPO=askyq CUSTOM_DOMAIN=askqadi.org ./scripts/deploy/github_pages_set_domain.sh
 ```
+
+Optional: `GITHUB_PAGES_BRANCH=main` if your default branch differs.
 
 Or in the UI: **Settings → Pages → Custom domain** → `askqadi.org` → Save. After DNS propagates, enable **Enforce HTTPS**.
 

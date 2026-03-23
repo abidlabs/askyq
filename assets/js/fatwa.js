@@ -81,7 +81,7 @@ async function init() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const fatwa = await res.json();
 
-    document.title = `${fatwa.title} - AskYQ`;
+    document.title = `${fatwa.title} - AskQadi`;
 
     categoryEl.textContent = fatwa.category;
     titleEl.textContent = fatwa.title;

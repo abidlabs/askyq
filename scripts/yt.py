@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""YouTube helper for AskYQ - search Yasir Qadhi's channel and fetch transcripts."""
+"""YouTube helper for AskQadi - search Yasir Qadhi's channel and fetch transcripts."""
 
 import sys
 import json

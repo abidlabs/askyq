@@ -9,7 +9,8 @@ const SITE_URL = (process.env.SITE_URL || "https://askqadi.org").replace(
   /\/$/,
   ""
 );
-const SITE_NAME = "AskYQ";
+const SITE_NAME = "AskQadi";
+const SITE_LOGO_MARKUP = "Ask<em>Qadi</em>";
 const SITE_DESC =
   "Search fatwas and Islamic rulings derived from Yasir Qadhi's lectures and Q&A sessions.";
 const ROOT = path.resolve(__dirname, "..");
@@ -321,14 +322,14 @@ function buildFatwaPage(fatwa, allFatwas) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${escapeHtml(fatwa.title)} | Yasir Qadhi - AskYQ</title>
+    <title>${escapeHtml(fatwa.title)} | Yasir Qadhi - ${SITE_NAME}</title>
     <meta name="description" content="${escapeHtml(desc)}" />
     <link rel="canonical" href="${canonicalUrl}" />
-    <meta property="og:title" content="${escapeHtml(fatwa.title)} | Yasir Qadhi - AskYQ" />
+    <meta property="og:title" content="${escapeHtml(fatwa.title)} | Yasir Qadhi - ${SITE_NAME}" />
     <meta property="og:description" content="${escapeHtml(desc)}" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="${canonicalUrl}" />
-    <meta property="og:site_name" content="AskYQ" />
+    <meta property="og:site_name" content="${SITE_NAME}" />
     <meta property="og:image" content="${SITE_URL}/assets/images/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -336,7 +337,7 @@ function buildFatwaPage(fatwa, allFatwas) {
     <meta name="twitter:image" content="${SITE_URL}/assets/images/og-image.png" />
     <meta name="twitter:title" content="${escapeHtml(fatwa.title)}" />
     <meta name="twitter:description" content="${escapeHtml(desc)}" />
-    <link rel="alternate" type="application/rss+xml" title="AskYQ RSS Feed" href="${SITE_URL}/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="${SITE_NAME} RSS Feed" href="${SITE_URL}/feed.xml" />
     <script type="application/ld+json">${articleJsonLd}</script>
     <script type="application/ld+json">${faqJsonLd}</script>
     <script type="application/ld+json">${breadcrumbJsonLd}</script>
@@ -384,7 +385,7 @@ function buildFatwaPage(fatwa, allFatwas) {
 
       ${relatedHtml}
 
-      ${footerHtml("AskYQ", "Islamic rulings from Yasir Qadhi", "page-footer")}
+      ${footerHtml(SITE_NAME, "Islamic rulings from Yasir Qadhi", "page-footer")}
     </main>
   </body>
 </html>`;
@@ -437,20 +438,20 @@ function buildCategoryPage(category, catFatwas, allCategories) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${escapeHtml(category)} | Islamic Rulings - AskYQ</title>
+    <title>${escapeHtml(category)} | Islamic Rulings - ${SITE_NAME}</title>
     <meta name="description" content="${escapeHtml(desc)}" />
     <link rel="canonical" href="${canonicalUrl}" />
-    <meta property="og:title" content="${escapeHtml(category)} | AskYQ" />
+    <meta property="og:title" content="${escapeHtml(category)} | ${SITE_NAME}" />
     <meta property="og:description" content="${escapeHtml(desc)}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${canonicalUrl}" />
-    <meta property="og:site_name" content="AskYQ" />
+    <meta property="og:site_name" content="${SITE_NAME}" />
     <meta property="og:image" content="${SITE_URL}/assets/images/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="${SITE_URL}/assets/images/og-image.png" />
-    <link rel="alternate" type="application/rss+xml" title="AskYQ RSS Feed" href="${SITE_URL}/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="${SITE_NAME} RSS Feed" href="${SITE_URL}/feed.xml" />
     <script type="application/ld+json">${breadcrumbJsonLd}</script>
     <link rel="stylesheet" href="../../assets/css/main.css" />
   </head>
@@ -487,7 +488,7 @@ function buildCategoryPage(category, catFatwas, allCategories) {
         </div>
       </section>
 
-      ${footerHtml("AskYQ", "Islamic rulings from Yasir Qadhi", "page-footer")}
+      ${footerHtml(SITE_NAME, "Islamic rulings from Yasir Qadhi", "page-footer")}
     </main>
   </body>
 </html>`;
@@ -559,20 +560,20 @@ function buildHomepage(fatwas, categories) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AskYQ - Islamic Rulings &amp; Fatwas by Yasir Qadhi</title>
+    <title>${SITE_NAME} - Islamic Rulings &amp; Fatwas by Yasir Qadhi</title>
     <meta name="description" content="${escapeHtml(metaDesc)}" />
     <link rel="canonical" href="${canonicalUrl}" />
-    <meta property="og:title" content="AskYQ - Islamic Rulings &amp; Fatwas by Yasir Qadhi" />
+    <meta property="og:title" content="${SITE_NAME} - Islamic Rulings &amp; Fatwas by Yasir Qadhi" />
     <meta property="og:description" content="${escapeHtml(SITE_DESC)}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${canonicalUrl}" />
-    <meta property="og:site_name" content="AskYQ" />
+    <meta property="og:site_name" content="${SITE_NAME}" />
     <meta property="og:image" content="${SITE_URL}/assets/images/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="${SITE_URL}/assets/images/og-image.png" />
-    <link rel="alternate" type="application/rss+xml" title="AskYQ RSS Feed" href="${SITE_URL}/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="${SITE_NAME} RSS Feed" href="${SITE_URL}/feed.xml" />
     <script type="application/ld+json">${websiteJsonLd}</script>
     <script type="application/ld+json">${faqJsonLd}</script>
     <link rel="stylesheet" href="./assets/css/main.css" />
@@ -590,7 +591,7 @@ function buildHomepage(fatwas, categories) {
       <section class="hero">
         <div class="bismillah" aria-hidden="true">&#1576;&#1587;&#1605; &#1575;&#1604;&#1604;&#1607; &#1575;&#1604;&#1585;&#1581;&#1605;&#1606; &#1575;&#1604;&#1585;&#1581;&#1610;&#1605;</div>
         <p class="eyebrow">Islamic rulings database</p>
-        <h1 class="site-title">Ask<em>YQ</em></h1>
+        <h1 class="site-title">${SITE_LOGO_MARKUP}</h1>
         <p class="site-tagline">
           Search fatwas and Islamic rulings derived from Yasir Qadhi's lectures and Q&A sessions.
         </p>
@@ -715,7 +716,7 @@ function buildFeed(fatwas) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>AskYQ - Islamic Rulings from Yasir Qadhi</title>
+    <title>${SITE_NAME} - Islamic Rulings from Yasir Qadhi</title>
     <link>${SITE_URL}/</link>
     <description>${escapeHtml(SITE_DESC)}</description>
     <language>en</language>
