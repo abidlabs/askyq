@@ -5,7 +5,10 @@ const path = require("path");
 // ============================================================
 // CONFIG
 // ============================================================
-const SITE_URL = "https://abidlabs.github.io/askyq";
+const SITE_URL = (process.env.SITE_URL || "https://askqadi.org").replace(
+  /\/$/,
+  ""
+);
 const SITE_NAME = "AskYQ";
 const SITE_DESC =
   "Search fatwas and Islamic rulings derived from Yasir Qadhi's lectures and Q&A sessions.";
@@ -773,6 +776,11 @@ function main() {
   // 6. RSS feed
   fs.writeFileSync(path.join(ROOT, "feed.xml"), buildFeed(fatwas));
   console.log("  feed.xml");
+
+  const cnameHost =
+    process.env.CNAME_HOST || new URL(`${SITE_URL}/`).hostname;
+  fs.writeFileSync(path.join(ROOT, "CNAME"), `${cnameHost}\n`);
+  console.log("  CNAME");
 
   // 7. OG image (update fatwa count)
   generateOgImage(fatwas.length);
