@@ -550,6 +550,209 @@ body {
   display: flex;
 }
 
+body.has-fatwa-video {
+  padding-bottom: clamp(100px, 22vw, 132px);
+}
+
+.fatwa-video-dock {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  border-top: 1px solid var(--border-soft);
+  background: var(--bg);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.fatwa-video-dock[hidden] {
+  display: none !important;
+}
+
+.fatwa-video-dock__inner {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px 40px calc(12px + env(safe-area-inset-bottom, 0px)) 20px;
+}
+
+.fatwa-video-thumb {
+  flex-shrink: 0;
+  display: block;
+  width: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  align-self: center;
+  border: 1px solid var(--border-soft);
+  line-height: 0;
+}
+
+.fatwa-video-thumb img {
+  display: block;
+  width: 120px;
+  height: auto;
+  aspect-ratio: 120 / 68;
+  object-fit: cover;
+}
+
+.fatwa-video-dock__center {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.fatwa-video-scrub__track {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(74, 158, 106, 0.15);
+  overflow: hidden;
+}
+
+.fatwa-video-scrub__fill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--green, #4a9e6a)
+  );
+  transition: width 0.08s linear;
+}
+
+.fatwa-video-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fatwa-video-times {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.fatwa-video-times__sep {
+  font-weight: 500;
+  color: var(--text-dim);
+}
+
+.fatwa-video-speed {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.fatwa-video-speed__btn {
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg);
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: inherit;
+  line-height: 1.2;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.fatwa-video-speed__btn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.fatwa-video-speed__btn.is-active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(74, 158, 106, 0.12);
+}
+
+.fatwa-video-disclaimer {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--text-dim);
+}
+
+.fatwa-video-disclaimer a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.fatwa-video-disclaimer a:hover {
+  color: var(--accent);
+}
+
+.fatwa-video-playbtn {
+  flex-shrink: 0;
+  align-self: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  background: var(--bg);
+  color: var(--accent);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.fatwa-video-playbtn:hover {
+  background: rgba(74, 158, 106, 0.1);
+}
+
+.fatwa-video-playbtn:active {
+  transform: scale(0.96);
+}
+
+.fatwa-video-playbtn svg {
+  width: 26px;
+  height: 26px;
+}
+
+.fatwa-video-playbtn__icon-pause {
+  display: none;
+}
+
+.fatwa-video-playbtn.is-playing .fatwa-video-playbtn__icon-play {
+  display: none;
+}
+
+.fatwa-video-playbtn.is-playing .fatwa-video-playbtn__icon-pause {
+  display: block;
+}
+
+.fatwa-yt-host {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  opacity: 0.02;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
 /* ============================================================
    DETAIL / FATWA PAGE
    ============================================================ */
@@ -1176,6 +1379,23 @@ pre {
 
   .breadcrumb {
     font-size: 12px;
+  }
+
+  .fatwa-video-dock__inner {
+    flex-wrap: wrap;
+    padding-left: 14px;
+    padding-right: 14px;
+    gap: 10px;
+  }
+
+  .fatwa-video-thumb,
+  .fatwa-video-thumb img {
+    width: 96px;
+  }
+
+  .fatwa-video-playbtn {
+    width: 44px;
+    height: 44px;
   }
 }
 

@@ -1,0 +1,339 @@
+const YT_PLAYING = 1;
+const RATE_STORAGE_KEY = "fatwaPlaybackRate";
+const RATE_OPTIONS = [0.5, 1, 2];
+
+function formatTime(sec) {
+  if (!Number.isFinite(sec) || sec < 0) return "0:00";
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = Math.floor(sec % 60);
+  if (h > 0) {
+    return `${h}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+  }
+  return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
+function parseTParam(raw) {
+  if (raw == null || raw === "") return null;
+  const str = String(raw).trim();
+  if (/^\d+$/.test(str)) return parseInt(str, 10);
+  let sec = 0;
+  const h = str.match(/(\d+)h/i);
+  const mi = str.match(/(\d+)m/i);
+  const ss = str.match(/(\d+)s/i);
+  if (h) sec += parseInt(h[1], 10) * 3600;
+  if (mi) sec += parseInt(mi[1], 10) * 60;
+  if (ss) sec += parseInt(ss[1], 10);
+  if (h || mi || ss) return sec;
+  return null;
+}
+
+function parseYouTubeTimeFromHref(href) {
+  try {
+    const u = new URL(href, window.location.href);
+    const t = u.searchParams.get("t") || u.searchParams.get("start");
+    return parseTParam(t);
+  } catch {
+    return null;
+  }
+}
+
+function collectAnchors(article) {
+  const links = article.querySelectorAll(
+    'a[href*="youtube.com/watch"], a[href*="youtu.be/"]'
+  );
+  const points = [];
+  for (const a of links) {
+    const t = parseYouTubeTimeFromHref(a.href);
+    if (t === null) continue;
+    const y = a.getBoundingClientRect().top + window.scrollY;
+    points.push({ t, y });
+  }
+  points.sort((a, b) => a.y - b.y);
+  const seen = new Set();
+  const deduped = [];
+  for (const p of points) {
+    const key = `${p.y}-${p.t}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    deduped.push(p);
+  }
+  return deduped.sort((a, b) => a.y - b.y);
+}
+
+function mapScrollToTime(refY, points, durationSec, article) {
+  const bottomY = article.getBoundingClientRect().bottom + window.scrollY;
+  const extended = [...points];
+  if (durationSec > 0) {
+    extended.push({ t: durationSec, y: bottomY });
+  }
+  extended.sort((a, b) => a.y - b.y);
+  if (extended.length < 2) {
+    const top = article.getBoundingClientRect().top + window.scrollY;
+    const h = article.offsetHeight;
+    const ratio = h > 0 ? Math.max(0, Math.min(1, (refY - top) / h)) : 0;
+    return durationSec > 0 ? ratio * durationSec : 0;
+  }
+  if (refY <= extended[0].y) return extended[0].t;
+  if (refY >= extended[extended.length - 1].y) {
+    return extended[extended.length - 1].t;
+  }
+  for (let i = 0; i < extended.length - 1; i++) {
+    const a = extended[i];
+    const b = extended[i + 1];
+    if (refY >= a.y && refY <= b.y) {
+      const span = Math.max(1, b.y - a.y);
+      const frac = (refY - a.y) / span;
+      return a.t + frac * (b.t - a.t);
+    }
+  }
+  return extended[extended.length - 1].t;
+}
+
+function loadYouTubeAPI() {
+  return new Promise((resolve) => {
+    if (window.YT && window.YT.Player) {
+      resolve();
+      return;
+    }
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      resolve();
+    };
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      if (typeof prev === "function") prev();
+      finish();
+    };
+    if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    } else {
+      const poll = window.setInterval(() => {
+        if (window.YT && window.YT.Player) {
+          window.clearInterval(poll);
+          finish();
+        }
+      }, 40);
+    }
+  });
+}
+
+function init() {
+  const dock = document.getElementById("fatwaVideoDock");
+  const host = document.getElementById("fatwaYtPlayerHost");
+  const fill = document.getElementById("fatwaVideoScrubFill");
+  const curEl = document.getElementById("fatwaTimeCurrent");
+  const durEl = document.getElementById("fatwaTimeDuration");
+  const btn = document.getElementById("fatwaPlayBtn");
+  const article = document.querySelector(".fatwa-body");
+  const speedBar = document.querySelector(".fatwa-video-speed");
+
+  if (!dock || !host || !article || !fill || !curEl || !durEl || !btn) return;
+
+  const videoId = dock.dataset.videoId;
+  if (!videoId) return;
+
+  let anchorPoints = collectAnchors(article);
+  let duration = 0;
+  let player = null;
+  let playerReady = false;
+  let playing = false;
+  let playTimer = null;
+
+  function rebuildAnchors() {
+    anchorPoints = collectAnchors(article);
+  }
+
+  function computeScrollTime() {
+    const refY = window.scrollY + window.innerHeight * 0.35;
+    if (duration <= 0) {
+      return 0;
+    }
+    return mapScrollToTime(refY, anchorPoints, duration, article);
+  }
+
+  function updateUI(t) {
+    curEl.textContent = formatTime(t);
+    durEl.textContent = duration > 0 ? formatTime(duration) : "--:--";
+    let pct;
+    if (duration > 0) {
+      pct = Math.max(0, Math.min(100, (t / duration) * 100));
+    } else {
+      const top = article.getBoundingClientRect().top + window.scrollY;
+      const h = article.offsetHeight;
+      const refY = window.scrollY + window.innerHeight * 0.35;
+      pct =
+        h > 0
+          ? Math.max(0, Math.min(100, ((refY - top) / h) * 100))
+          : 0;
+    }
+    fill.style.width = `${pct}%`;
+  }
+
+  function tick() {
+    let t;
+    if (playing && player) {
+      t = player.getCurrentTime();
+    } else {
+      t = computeScrollTime();
+    }
+    updateUI(t);
+  }
+
+  function onStateChange(e) {
+    playing = e.data === YT_PLAYING;
+    btn.classList.toggle("is-playing", playing);
+    if (playTimer) {
+      clearInterval(playTimer);
+      playTimer = null;
+    }
+    if (playing) {
+      playTimer = window.setInterval(() => tick(), 200);
+    } else {
+      tick();
+    }
+  }
+
+  let scrollRaf = null;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (playing) return;
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(() => {
+        scrollRaf = null;
+        tick();
+      });
+    },
+    { passive: true }
+  );
+
+  window.addEventListener(
+    "resize",
+    () => {
+      rebuildAnchors();
+      tick();
+    },
+    { passive: true }
+  );
+
+  btn.addEventListener("click", () => {
+    if (!player || !playerReady) return;
+    if (playing) {
+      player.pauseVideo();
+    } else {
+      const t = computeScrollTime();
+      player.seekTo(t, true);
+      player.playVideo();
+    }
+  });
+
+  function syncSpeedButtons(activeRate) {
+    if (!speedBar) return;
+    const buttons = speedBar.querySelectorAll(".fatwa-video-speed__btn");
+    let best = RATE_OPTIONS[1];
+    let bestDiff = Infinity;
+    for (const opt of RATE_OPTIONS) {
+      const d = Math.abs(opt - activeRate);
+      if (d < bestDiff) {
+        bestDiff = d;
+        best = opt;
+      }
+    }
+    buttons.forEach((b) => {
+      const r = Number.parseFloat(b.dataset.rate);
+      b.classList.toggle("is-active", Math.abs(r - best) < 0.01);
+    });
+  }
+
+  function applyPlaybackRate(rate) {
+    if (!player || !playerReady) return;
+    try {
+      player.setPlaybackRate(rate);
+    } catch {
+      return;
+    }
+    let actual = rate;
+    try {
+      actual = player.getPlaybackRate();
+    } catch {
+      actual = rate;
+    }
+    try {
+      localStorage.setItem(RATE_STORAGE_KEY, String(actual));
+    } catch {
+      /* ignore */
+    }
+    syncSpeedButtons(actual);
+  }
+
+  if (speedBar) {
+    speedBar.addEventListener("click", (ev) => {
+      const t = ev.target;
+      if (!(t instanceof HTMLButtonElement) || !t.dataset.rate) return;
+      const rate = Number.parseFloat(t.dataset.rate);
+      if (!Number.isFinite(rate)) return;
+      applyPlaybackRate(rate);
+    });
+  }
+
+  loadYouTubeAPI().then(() => {
+    player = new window.YT.Player(host, {
+      videoId,
+      width: 1,
+      height: 1,
+      playerVars: {
+        playsinline: 1,
+        rel: 0,
+        controls: 0,
+      },
+      events: {
+        onReady: (e) => {
+          playerReady = true;
+          duration = e.target.getDuration();
+          if (!Number.isFinite(duration) || duration <= 0) duration = 0;
+          rebuildAnchors();
+          let initial = 1;
+          try {
+            const saved = localStorage.getItem(RATE_STORAGE_KEY);
+            if (saved != null) {
+              const p = Number.parseFloat(saved);
+              if (Number.isFinite(p)) initial = p;
+            }
+          } catch {
+            /* ignore */
+          }
+          const available = (() => {
+            try {
+              return e.target.getAvailablePlaybackRates();
+            } catch {
+              return null;
+            }
+          })();
+          if (
+            Array.isArray(available) &&
+            available.length &&
+            !available.some((x) => Math.abs(x - initial) < 0.01)
+          ) {
+            const sorted = [...available].sort(
+              (a, b) => Math.abs(a - initial) - Math.abs(b - initial)
+            );
+            initial = sorted[0];
+          }
+          applyPlaybackRate(initial);
+          tick();
+        },
+        onStateChange: onStateChange,
+      },
+    });
+  });
+
+  rebuildAnchors();
+  tick();
+}
+
+init();

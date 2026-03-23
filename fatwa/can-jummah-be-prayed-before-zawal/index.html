@@ -123,10 +123,10 @@
 }</script>
     <link rel="stylesheet" href="../../assets/css/main.css" />
   </head>
-  <body>
+  <body class="has-fatwa-video">
     <div class="pattern-bg" aria-hidden="true"></div>
 
-    <main class="page">
+    <main class="page page-fatwa">
       <nav class="top-nav">
         <a href="../../" class="nav-link">Home</a>
         <a href="../../api/index.html" class="nav-link">API docs</a>
@@ -232,33 +232,55 @@
 </a></div>
       </section>
 
-      <footer class="site-footer page-footer" id="siteFooter">
-        <button class="footer-close" id="footerClose" aria-label="Dismiss">&times;</button>
-        <div class="footer-stat">
-          <span class="stat-value" id="fatwaCount">AskQadi</span>
-          <span class="stat-subvalue">Islamic rulings from Yasir Qadhi</span>
+      <footer class="fatwa-video-dock" id="fatwaVideoDock" data-video-id="GC-Lfw8RfyY" data-video-url="https://www.youtube.com/watch?v=GC-Lfw8RfyY">
+      <button type="button" class="footer-close" id="fatwaFooterClose" aria-label="Dismiss">&times;</button>
+      <div class="fatwa-video-dock__inner">
+        <a class="fatwa-video-thumb" href="https://www.youtube.com/watch?v=GC-Lfw8RfyY" target="_blank" rel="noopener noreferrer" aria-label="Open video on YouTube">
+          <img src="https://img.youtube.com/vi/GC-Lfw8RfyY/hqdefault.jpg" alt="" width="120" height="68" loading="lazy" decoding="async" />
+        </a>
+        <div class="fatwa-video-dock__center">
+          <div class="fatwa-video-scrub" aria-hidden="true">
+            <div class="fatwa-video-scrub__track">
+              <div class="fatwa-video-scrub__fill" id="fatwaVideoScrubFill"></div>
+            </div>
+          </div>
+          <div class="fatwa-video-meta">
+            <span class="fatwa-video-times" aria-live="polite">
+              <span id="fatwaTimeCurrent">0:00</span><span class="fatwa-video-times__sep"> / </span><span id="fatwaTimeDuration">--:--</span>
+            </span>
+            <div class="fatwa-video-speed" role="group" aria-label="Playback speed">
+              <button type="button" class="fatwa-video-speed__btn" data-rate="0.5">0.5×</button>
+              <button type="button" class="fatwa-video-speed__btn is-active" data-rate="1">1×</button>
+              <button type="button" class="fatwa-video-speed__btn" data-rate="2">2×</button>
+            </div>
+            <p class="fatwa-video-disclaimer">Transcripts are AI-cleaned and may contain errors. Listen to the original video to verify.</p>
+          </div>
         </div>
-        <div class="footer-disclaimer">
-          <p>Transcripts are AI-cleaned and AI-summarized, and may contain errors. <a href="https://github.com/abidlabs/askyq/compare" target="_blank" rel="noreferrer noopener">Open a PR to fix.</a></p>
-          <p>It is always best to consult with a trusted, local scholar for your questions.</p>
-        </div>
-      </footer>
-      <button class="footer-toggle" id="footerToggle" aria-label="Show footer">
+        <button type="button" class="fatwa-video-playbtn" id="fatwaPlayBtn" aria-label="Play or pause video">
+          <svg class="fatwa-video-playbtn__icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="fatwa-video-playbtn__icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+      </div>
+      <div class="fatwa-yt-host" id="fatwaYtPlayerHost" aria-hidden="true"></div>
+    </footer>
+    <button type="button" class="footer-toggle" id="fatwaFooterToggle" aria-label="Show video bar">
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 9.5L7 5.5L11 9.5"/></svg>
       </button>
-      <script>
+    <script>
       (function(){
-        var f=document.getElementById('siteFooter');
-        var t=document.getElementById('footerToggle');
-        var btn=document.getElementById('footerClose');
+        var f=document.getElementById("fatwaVideoDock");
+        var t=document.getElementById("fatwaFooterToggle");
+        var btn=document.getElementById("fatwaFooterClose");
         if(!f||!t) return;
-        function hide(){f.hidden=true;t.classList.add('visible');localStorage.setItem('footerDismissed','1');}
-        function show(){f.hidden=false;t.classList.remove('visible');localStorage.removeItem('footerDismissed');}
-        if(localStorage.getItem('footerDismissed')==='1') hide();
-        if(btn) btn.addEventListener('click',hide);
-        t.addEventListener('click',show);
+        var key="fatwaVideoDockDismissed";
+        function hide(){f.hidden=true;t.classList.add("visible");try{localStorage.setItem(key,"1");}catch(e){}}
+        function show(){f.hidden=false;t.classList.remove("visible");try{localStorage.removeItem(key);}catch(e){}}
+        try{if(localStorage.getItem(key)==="1") hide();}catch(e){}
+        if(btn) btn.addEventListener("click",hide);
+        t.addEventListener("click",show);
       })();
-      </script>
+    </script>
+    <script type="module" src="../../assets/js/fatwa-player.js"></script>
     </main>
   </body>
 </html>
